@@ -1,0 +1,42 @@
+.caret-left {
+    border-bottom: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-right: 8px solid #ffffff;
+    display: inline-block;
+    margin-top: 4px;
+    margin-right: 12px;
+}
+
+.caret-right {
+    border-bottom: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-left: 8px solid #ffffff;
+    display: inline-block;
+    margin-top: 4px;
+    margin-left: 12px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #6c757d;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.flex-fill {
+    flex: 1;
+}
+
+.abs-center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.container {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.nav-container {
+
+}
