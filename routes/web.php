@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function(){
     ]);
 
     Route::get('/dining', [
-        'uses' => 'HomeController@dining',
+        'uses' => 'ExpensesController@index',
         'as' => 'dining'
     ]);
 

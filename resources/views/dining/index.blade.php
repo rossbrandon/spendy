@@ -60,36 +60,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row" class="id">1</th>
-                        <td>9<sup>th</sup></td>
-                        <td>Salvation Pizza</td>
-                        <td>$17.02</td>
-                        <td>Lunch for Nick</td>
-                        <td class="text-center">
-                            <button class="btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>11<sup>th</sup></td>
-                        <td>Jimmy John's</td>
-                        <td>$9.18</td>
-                        <td></td>
-                        <td class="text-center">
-                            <button class="btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>12<sup>th</sup></td>
-                        <td>Dan's Burgers</td>
-                        <td>$20.00</td>
-                        <td>For 2</td>
-                        <td class="text-center">
-                            <button class="btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
+                    @foreach ($expenses as $expense)
+                        <tr>
+                            <th scope="row" class="id">1</th>
+                            <td>{{ $expense->date }}</td>
+                            <td>{{ $expense->place }}</td>
+                            <td>${{ $expense->price }}</td>
+                            <td>{{ $expense->reason }}</td>
+                            <td class="text-center">
+                                <button class="btn-sm btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
                 <a href="{{ route('edit') }}" class="btn btn-success float-right">Add Entry</a>
