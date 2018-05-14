@@ -16,13 +16,23 @@ Route::get('/', [
     'as' => 'index'
 ]);
 
-Route::get('/dining', [
-    'uses' => 'HomeController@dining',
-    'as' => 'dining'
-]);
-
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::get('/dashboard', [
+        'uses' => 'HomeController@dashboard',
+        'as' => 'dashboard'
+    ]);
+
+    Route::get('/dining', [
+        'uses' => 'HomeController@dining',
+        'as' => 'dining'
+    ]);
+
+    Route::get('/edit', [
+        'uses' => 'HomeController@edit',
+        'as' => 'edit'
+    ]);
 
 });

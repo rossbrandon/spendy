@@ -22,10 +22,6 @@
     cursor: pointer;
 }
 
-.flex-fill {
-    flex: 1;
-}
-
 .abs-center-x {
     position: absolute;
     left: 50%;
@@ -35,8 +31,4 @@
 .container {
     margin-top: 25px;
     margin-bottom: 25px;
-}
-
-.nav-container {
-
 }

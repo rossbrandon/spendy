@@ -46,6 +46,7 @@
     <hr />
     <div class="container">
         <div class="row">
+            <h2>{{ __('Transactions') }}</h2>
             <div class="table-responsive">
                 <table class="table table-hover table-bordered table-striped">
                     <thead class="thead-dark">
@@ -60,7 +61,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row" class="id">1</th>
                         <td>9<sup>th</sup></td>
                         <td>Salvation Pizza</td>
                         <td>$17.02</td>
@@ -91,7 +92,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-success float-right">Add Entry</button>
+                <a href="{{ route('edit') }}" class="btn btn-success float-right">Add Entry</a>
             </div>
         </div>
     </div>
