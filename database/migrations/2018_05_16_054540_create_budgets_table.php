@@ -17,7 +17,7 @@ class CreateBudgetsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('name');
-            $table->decimal('amount');
+            $table->decimal('amount', 18, 2);
             $table->date('date');
             $table->timestamps();
         });

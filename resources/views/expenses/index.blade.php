@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+@if ($budget)
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 @if(date('m', $date) == date('m'))
-                    <h2>{{ __('Progress') }}
+                    <h2>{{ $budget->name }}
                         <small class="float-right">
                             {{ __('Day') }}
                             {{ date('d') }}
@@ -17,7 +18,7 @@
                     <h2>{{ __('Progress') }}</h2>
                 @endif
                 <div class="progress">
-                    @if ($remaining > 0)
+                    @if ($remaining >= 0)
                         <div class="progress-bar bg-success" role="progressbar" style="width: {{ $budget->amount > 0 ? ($spent/$budget->amount)*100 : 0 }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     @else
                         <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $budget->amount > 0 ? ($spent/$budget->amount)*100 : 0 }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -31,7 +32,7 @@
             <div class="col-lg-10 offset-1">
                 <div class="card-group">
                     <div class="card text-white bg-dark">
-                        <div class="card-header text-center">{{ __('Days Dined Out') }}</div>
+                        <div class="card-header text-center">{{ __('Days of Spending') }}</div>
                         <div class="card-body">
                             <h4 class="text-center">{{ count($expenses) }}</h4>
                         </div>
@@ -48,7 +49,7 @@
                             <h4 class="text-center">${{ number_format($spent, 2, '.', ',') }}</h4>
                         </div>
                     </div>
-                    @if ($remaining > 0)
+                    @if ($remaining >= 0)
                         <div class="card text-white bg-success">
                             <div class="card-header text-center">{{ __('Remaining') }}</div>
                             <div class="card-body">
@@ -85,7 +86,7 @@
                     </thead>
                     <tbody>
                     @foreach ($expenses as $expense)
-                        <tr>
+                        <tr class="clickable-row" data-href="{{ route('expense.edit', ['id' => $expense->id]) }}">
                             <td>{{ date('jS', strtotime($expense->date)) }}</td>
                             <td>{{ $expense->place }}</td>
                             <td>${{ $expense->price }}</td>
@@ -101,8 +102,17 @@
                 <a href="{{ route('expense.create') }}" class="btn btn-success float-right">Add Entry</a>
             </div>
             @else
-                <h2 class="text-center">No transactions found for this budget category</h2>
+                <h2 class="text-center">No transactions found for this budget category... <a href="{{ route('expense.create') }}">Create One!</a></h2>
             @endif
         </div>
     </div>
+@else
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center">No budget found... <a href="{{ route('budget.create') }}">Create One!</a></h2>
+            </div>
+        </div>
+    </div>
+@endif
 @endsection

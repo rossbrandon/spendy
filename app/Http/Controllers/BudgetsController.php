@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Budget;
+use Auth;
 
 class BudgetsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if (!$request->session()->get('date')) {
+            $request->session()->put('date', strtotime(now()));
+        }
+
+        $date = $request->session()->get('date');
+        $budgets = Budget::where('user_id', Auth::id())->get();
+
+        return view('budgets.index')->with('navBudgets', Budget::take(3)->get())
+            ->with('budgets', $budgets)
+            ->with('date', $date);
     }
 
     /**
@@ -21,9 +33,11 @@ class BudgetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $date = $request->session()->get('date');
+        return view('budgets.create')->with('navBudgets', Budget::take(3)->get())
+            ->with('date', $date);
     }
 
     /**
@@ -34,7 +48,22 @@ class BudgetsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'date' => 'required|date',
+            'amount' => 'required|between:0,99.99'
+        ]);
+
+        $date = date('Y-m-01', strtotime($request->date));
+
+        Budget::create([
+            'user_id' => Auth::id(),
+            'name' => $request->name,
+            'date' => $date,
+            'amount' => $request->amount
+        ]);
+
+        return redirect()->route('budgets');
     }
 
     /**
@@ -51,12 +80,18 @@ class BudgetsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param \Illuminate\Http\Request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $date = $request->session()->get('date');
+        $budget = Budget::find($id);
+
+        return view('budgets.edit')->with('budget', $budget)
+            ->with('navBudgets', Budget::take(3)->get())
+            ->with('date', $date);
     }
 
     /**
@@ -68,7 +103,19 @@ class BudgetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'date' => 'required|date',
+            'amount' => 'required|between:0,99.99'
+        ]);
+
+        $budget = Budget::find($id);
+        $budget->name = $request->name;
+        $budget->date = date('Y-m-01', strtotime($request->date));
+        $budget->amount = $request->amount;
+        $budget->save();
+
+        return redirect()->route('budgets');
     }
 
     /**
@@ -79,6 +126,9 @@ class BudgetsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $budget = Budget::find($id);
+        $budget->delete();
+
+        return redirect()->back();
     }
 }

@@ -18,7 +18,7 @@ class CreateExpensesTable extends Migration
             $table->integer('budget_id');
             $table->string('place');
             $table->date('date');
-            $table->decimal('price');
+            $table->decimal('price', 18, 2);
             $table->text('reason');
             $table->timestamps();
         });

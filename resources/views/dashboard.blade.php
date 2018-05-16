@@ -42,7 +42,7 @@
                             <h4 class="text-center">{{ number_format($totalSpent, 2, '.', ',') }}</h4>
                         </div>
                     </div>
-                    @if ($totalRemaining > 0)
+                    @if ($totalRemaining >= 0)
                         <div class="card text-white bg-success">
                             <div class="card-header text-center">{{ __('Total Remaining') }}</div>
                             <div class="card-body">
@@ -60,5 +60,35 @@
                 </div>
             </div>
         </div>
+    </div>
+    <hr />
+    <div class="container">
+        @if (count($budgets) > 0)
+            <div class="row">
+                <h2>{{ __('Your Budgets:') }}</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Month</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($budgets as $budget)
+                                <tr class="clickable-row" data-href="{{ route('expense.show', ['name' => $budget->name]) }}">
+                                    <td class="text-center">{{ $budget->name }}</td>
+                                    <td>{{ date('F Y', strtotime($budget->date)) }}</td>
+                                    <td>${{ $budget->amount }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        @else
+            <h2 class="text-center">No budgets found... <a href="{{ route('budget.create') }}">Create One!</a></h2>
+        @endif
     </div>
 @endsection

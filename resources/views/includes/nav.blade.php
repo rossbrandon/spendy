@@ -16,16 +16,16 @@
         <!-- Left Side Of Navbar -->
         @if (Auth::check())
             <ul class="navbar-nav mr-auto">
-                @foreach($navBudgets as $budget)
+                @foreach($navBudgets as $navBudget)
                     <li class="">
-                        <a class="nav-link text-white" href="{{ route('expense.show', ['id' => $budget->id]) }}">{{ $budget->name }}</a>
+                        <a class="nav-link text-white" href="{{ route('expense.show', ['name' => $navBudget->name]) }}">{{ $navBudget->name }}</a>
                     </li>
                 @endforeach
             </ul>
 
             <ul class="nav navbar-nav mx-auto abs-center-x text-white">
-                @if(Request::is('expense/show/*'))
-                    <li><a href="{{ route('expense.prev', ['id' => $currentBudget->id]) }}" class="nav-link">
+                @if (Request::is('expense/show/*'))
+                    <li><a href="{{ route('expense.prev', ['name' => $budget->name]) }}" class="nav-link">
                             <span class="caret-left"></span>
                         </a>
                     </li>
@@ -33,10 +33,12 @@
                         <span>{{ date('F Y', $date) }}</span>
                     </li>
                     <li>
-                        <a href="{{ route('expense.next', ['id' => $currentBudget->id]) }}" class="nav-link">
+                        <a href="{{ route('expense.next', ['name' => $budget->name]) }}" class="nav-link">
                             <span class="caret-right"></span>
                         </a>
                     </li>
+                @elseif (Request::is('budgets') || Request::is('budget/*'))
+
                 @else
                     <li><a href="{{ route('prev') }}" class="nav-link">
                             <span class="caret-left"></span>
@@ -51,7 +53,6 @@
                         </a>
                     </li>
                 @endif
-
             </ul>
         @endif
 
@@ -71,8 +72,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Admin</a>
-                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="{{ route('budgets') }}">My Budgets</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                    document.getElementById('logout-form').submit();"

@@ -35,17 +35,17 @@ Route::group(['middleware' => 'auth'], function(){
         'as' => 'next'
     ]);
 
-    Route::get('/expense/show/{id}', [
+    Route::get('/expense/show/{name}', [
         'uses' => 'ExpensesController@show',
         'as' => 'expense.show'
     ]);
 
-    Route::get('/expense/prev/{id}', [
+    Route::get('/expense/prev/{name}', [
         'uses' => 'ExpensesController@prev',
         'as' => 'expense.prev'
     ]);
 
-    Route::get('/expense/next/{id}', [
+    Route::get('/expense/next/{name}', [
         'uses' => 'ExpensesController@next',
         'as' => 'expense.next'
     ]);
@@ -73,5 +73,35 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/expense/delete/{id}', [
         'uses' => 'ExpensesController@destroy',
         'as' => 'expense.delete'
+    ]);
+
+    Route::get('/budgets', [
+        'uses' => 'BudgetsController@index',
+        'as' => 'budgets'
+    ]);
+
+    Route::get('/budget/create', [
+        'uses' => 'BudgetsController@create',
+        'as' => 'budget.create'
+    ]);
+
+    Route::post('/budget/store', [
+        'uses' => 'BudgetsController@store',
+        'as' => 'budget.store'
+    ]);
+
+    Route::get('/budget/edit/{id}', [
+        'uses' => 'BudgetsController@edit',
+        'as' => 'budget.edit'
+    ]);
+
+    Route::post('/budget/update/{id}', [
+        'uses' => 'BudgetsController@update',
+        'as' => 'budget.update'
+    ]);
+
+    Route::get('/budget/delete/{id}', [
+        'uses' => 'BudgetsController@destroy',
+        'as' => 'budget.delete'
     ]);
 });

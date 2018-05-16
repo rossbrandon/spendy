@@ -12,7 +12,7 @@ class Budget extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'name', 'amount'
+        'user_id', 'name', 'amount', 'date'
     ];
 
     public function user()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\Budget;
+use Auth;
 
 class ExpensesController extends Controller
 {
@@ -59,32 +60,41 @@ class ExpensesController extends Controller
             'reason' => $request->reason
         ]);
 
-        return redirect()->route('expense.show', ['id' => $expense->budget->id]);
+        return redirect()->route('expense.show', ['name' => $expense->budget->name]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param \Illuminate\Http\Request
-     * @param  int  $id
+     * @param  string  $name
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, string $name)
     {
         $date = $request->session()->get('date');
-        $budget = Budget::find($id);
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
-        $expenses = Expense::where('budget_id', $id)
-            ->where('date', '>=', $firstDayOfMonth)
-            ->where('date', '<=', $lastDayOfMonth)
-            ->orderBy('date', 'asc')
-            ->get();
-        $spent = $expenses->sum('price');
-        $remaining = $budget->amount - $spent;
+        $budget = Budget::where('user_id', Auth::id())
+            ->where('name', $name)
+            ->first();
+
+        if ($budget) {
+            $expenses = Expense::where('budget_id', $budget->id)
+                ->where('date', '>=', $firstDayOfMonth)
+                ->where('date', '<=', $lastDayOfMonth)
+                ->orderBy('date', 'asc')
+                ->get();
+            $spent = $expenses->sum('price');
+            $remaining = $budget->amount - $spent;
+        } else {
+            $expenses = collect(new Expense);
+            $spent = 0;
+            $remaining = 0;
+        }
+
         return view('expenses.index')->with('expenses', $expenses)
             ->with('navBudgets', Budget::take(3)->get())
-            ->with('currentBudget', Budget::find($id))
             ->with('date', $date)
             ->with('budget', $budget)
             ->with('spent', $spent)
@@ -106,7 +116,7 @@ class ExpensesController extends Controller
         return view('expenses.edit')->with('expense', $expense)
             ->with('budgets', Budget::all())
             ->with('navBudgets', Budget::take(3)->get())
-            ->with('currentBudget', Budget::find($id))
+            ->with('budget', Budget::find($id))
             ->with('date', $date);
     }
 
@@ -135,7 +145,7 @@ class ExpensesController extends Controller
         $expense->reason = $request->reason;
         $expense->save();
 
-        return redirect()->route('expense.show', ['id' => $expense->budget->id]);
+        return redirect()->route('expense.show', ['name' => $expense->budget->name]);
     }
 
     /**
@@ -156,31 +166,31 @@ class ExpensesController extends Controller
      * Go to previous month
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param int $id
+     * @param string $name
      * @return \Illuminate\Http\Response
      */
-    public function prev(Request $request, int $id)
+    public function prev(Request $request, string $name)
     {
         $date = $request->session()->pull('date');
         $prevMonth = date('Y-m-01', strtotime('-1 month', $date));
         $request->session()->put('date', strtotime($prevMonth));
 
-        return redirect()->route('expense.show', ['id' => $id]);
+        return redirect()->route('expense.show', ['name' => $name]);
     }
 
     /**
      * Go to next month
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param int $id
+     * @param string $name
      * @return \Illuminate\Http\Response
      */
-    public function next(Request $request, int $id)
+    public function next(Request $request, string $name)
     {
         $date = $request->session()->pull('date');
         $prevMonth = date('Y-m-01', strtotime('+1 month', $date));
         $request->session()->put('date', strtotime($prevMonth));
 
-        return redirect()->route('expense.show', ['id' => $id]);
+        return redirect()->route('expense.show', ['name' => $name]);
     }
 }
