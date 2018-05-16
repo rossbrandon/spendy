@@ -39,22 +39,33 @@ class HomeController extends Controller
         }
 
         $date = $request->session()->get('date');
-        $budget = 1000.00;
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
-        $expenses = Expense::where('user_id', Auth::id())
+        $budgets = Budget::where('user_id', Auth::id())
             ->where('date', '>=', $firstDayOfMonth)
             ->where('date', '<=', $lastDayOfMonth)
             ->get();
-        $spent = $expenses->sum('price');
-        $remaining = $budget - $spent;
+        $firstDayOfMonth = date('Y-m-01', $date);
+        $lastDayOfMonth = date('Y-m-t', $date);
 
-        return view('dashboard')->with('expenses', $expenses)
+        $totalBudget = 0;
+        $totalSpent = 0;
+        foreach ($budgets as $budget) {
+            $expenses = Expense::where('budget_id', $budget->id)
+                ->where('date', '>=', $firstDayOfMonth)
+                ->where('date', '<=', $lastDayOfMonth)
+                ->get();
+            $totalSpent += $expenses->sum('price');
+            $totalBudget += $budget->amount;
+        }
+        $totalRemaining = $totalBudget - $totalSpent;
+
+        return view('dashboard')->with('budgets', $budgets)
             ->with('navBudgets', Budget::take(3)->get())
             ->with('date', $date)
-            ->with('budget', $budget)
-            ->with('spent', $spent)
-            ->with('remaining', $remaining);
+            ->with('totalBudget', $totalBudget)
+            ->with('totalSpent', $totalSpent)
+            ->with('totalRemaining', $totalRemaining);
     }
 
     /**

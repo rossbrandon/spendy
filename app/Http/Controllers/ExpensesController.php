@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\Budget;
-use Auth;
 
 class ExpensesController extends Controller
 {
@@ -53,7 +52,6 @@ class ExpensesController extends Controller
         ]);
 
         $expense = Expense::create([
-            'user_id' => Auth::id(),
             'budget_id' => $request->budget_id,
             'place' => $request->place,
             'date' => $request->date,
@@ -74,7 +72,7 @@ class ExpensesController extends Controller
     public function show(Request $request, $id)
     {
         $date = $request->session()->get('date');
-        $budget = 100.00;
+        $budget = Budget::find($id);
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
         $expenses = Expense::where('budget_id', $id)
@@ -83,7 +81,7 @@ class ExpensesController extends Controller
             ->orderBy('date', 'asc')
             ->get();
         $spent = $expenses->sum('price');
-        $remaining = $budget - $spent;
+        $remaining = $budget->amount - $spent;
         return view('expenses.index')->with('expenses', $expenses)
             ->with('navBudgets', Budget::take(3)->get())
             ->with('currentBudget', Budget::find($id))
