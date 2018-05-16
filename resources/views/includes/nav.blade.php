@@ -16,24 +16,42 @@
         <!-- Left Side Of Navbar -->
         @if (Auth::check())
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('dining') }}">{{ __('Dining') }}</a>
-                </li>
+                @foreach($categories as $category)
+                    <li class="">
+                        <a class="nav-link text-white" href="{{ route('expense.show', ['id' => $category->id]) }}">{{ $category->name }}</a>
+                    </li>
+                @endforeach
             </ul>
 
             <ul class="nav navbar-nav mx-auto abs-center-x text-white">
-                <li><a href="#" class="nav-link">
-                        <span class="caret-left"></span>
-                    </a>
-                </li>
-                <li class="mt-2">
-                    <span>May 2018</span>
-                </li>
-                <li>
-                    <a href="#" class="nav-link">
-                        <span class="caret-right"></span>
-                    </a>
-                </li>
+                @if(Request::is('expense/show/*'))
+                    <li><a href="{{ route('expense.prev', ['id' => $currentCategory->id]) }}" class="nav-link">
+                            <span class="caret-left"></span>
+                        </a>
+                    </li>
+                    <li class="mt-2">
+                        <span>{{ date('F Y', $date) }}</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('expense.next', ['id' => $currentCategory->id]) }}" class="nav-link">
+                            <span class="caret-right"></span>
+                        </a>
+                    </li>
+                @else
+                    <li><a href="{{ route('prev') }}" class="nav-link">
+                            <span class="caret-left"></span>
+                        </a>
+                    </li>
+                    <li class="mt-2">
+                        <span>{{ date('F Y', $date) }}</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('next') }}" class="nav-link">
+                            <span class="caret-right"></span>
+                        </a>
+                    </li>
+                @endif
+
             </ul>
         @endif
 
