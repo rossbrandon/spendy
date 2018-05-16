@@ -45,7 +45,7 @@ return [
             'prefix' => '',
         ],
 
-        /*
+
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -60,9 +60,8 @@ return [
             'strict' => true,
             'engine' => null,
         ],
-        */
 
-        'mysql' => [
+        'mysql_heroku' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', $host),
             'port' => env('DB_PORT', '3306'),

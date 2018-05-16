@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Budget;
 
 class ExpensesTableSeeder extends Seeder
 {
@@ -11,8 +12,10 @@ class ExpensesTableSeeder extends Seeder
      */
     public function run()
     {
+        $budget = Budget::where('name', 'Dining')->first();
+
         App\Expense::create([
-            'budget_id' => 1,
+            'budget_id' => $budget->id,
             'place' => 'Salvation Pizza',
             'date' => '2018-05-09',
             'price' => '17.02',
@@ -20,7 +23,7 @@ class ExpensesTableSeeder extends Seeder
         ]);
 
         App\Expense::create([
-            'budget_id' => 1,
+            'budget_id' => $budget->id,
             'place' => 'Jimmy John\'s',
             'date' => '2018-05-11',
             'price' => '9.18',
@@ -28,7 +31,7 @@ class ExpensesTableSeeder extends Seeder
         ]);
 
         App\Expense::create([
-            'budget_id' => 1,
+            'budget_id' => $budget->id,
             'place' => 'Dan\'s Burgers',
             'date' => '2018-05-12',
             'price' => '20.00',
