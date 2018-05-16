@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CategoriesTableSeeder extends Seeder
+class BudgetsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +11,9 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        App\Category::create([
-            'name' => 'Dining'
+        App\Budget::create([
+            'name' => 'Dining',
+            'amount' => 100.00
         ]);
     }
 }

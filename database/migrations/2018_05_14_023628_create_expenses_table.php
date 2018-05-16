@@ -13,10 +13,10 @@ class CreateExpensesTable extends Migration
      */
     public function up()
     {
-        Schema::create('expense', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('category_id');
+            $table->integer('budget_id');
             $table->string('place');
             $table->date('date');
             $table->decimal('price');
@@ -32,6 +32,6 @@ class CreateExpensesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expense');
+        Schema::dropIfExists('expenses');
     }
 }

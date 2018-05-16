@@ -8,17 +8,17 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('Add Expense') }}</div>
+                <div class="card-header">{{ __('Edit Expense') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('expense.store') }}">
+                    <form method="POST" action="{{ route('expense.update', ['id' => $expense->id]) }}">
                         @csrf
 
                         <div class="form-group row">
                             <label for="place" class="col-md-4 col-form-label text-md-right">{{ __('Place') }}</label>
 
                             <div class="col-md-6">
-                                <input id="place" type="text" class="form-control" name="place" required autofocus>
+                                <input id="place" type="text" class="form-control" name="place" value="{{ $expense->place }}" required autofocus>
                             </div>
                         </div>
 
@@ -26,7 +26,7 @@
                             <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Date') }}</label>
 
                             <div class="col-md-6">
-                                <input id="date" type="date" class="form-control" name="date" value="{{ date('Y-m-d') }}" required>
+                                <input id="date" type="date" class="form-control" name="date" value="{{ $expense->date }}" required>
                             </div>
                         </div>
 
@@ -34,17 +34,21 @@
                             <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
 
                             <div class="col-md-6">
-                                <input id="price" type="text" class="form-control" name="price" required>
+                                <input id="price" type="text" class="form-control" name="price" value="{{ $expense->price }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="category_id" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+                            <label for="budget_id" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
 
                             <div class="col-md-6">
-                                <select name="category_id" id="category_id" class="form-control">
-                                    @foreach($allCategories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <select name="budget_id" id="budget_id" class="form-control">
+                                    @foreach($budgets as $budget)
+                                        <option value="{{ $budget->id }}"
+                                            @if($expense->budget->id == $budget->id)
+                                                selected
+                                            @endif
+                                        >{{ $budget->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -54,14 +58,14 @@
                             <label for="reason" class="col-md-4 col-form-label text-md-right">{{ __('Reason') }}</label>
 
                             <div class="col-md-6">
-                                <textarea id="reason" class="form-control" name="reason"></textarea>
+                                <textarea id="reason" class="form-control" name="reason">{{ $expense->reason }}</textarea>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-block btn-primary">
-                                    {{ __('Create Expense') }}
+                                    {{ __('Update Expense') }}
                                 </button>
                             </div>
                         </div>

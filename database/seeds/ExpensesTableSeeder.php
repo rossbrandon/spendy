@@ -13,7 +13,7 @@ class ExpensesTableSeeder extends Seeder
     {
         App\Expense::create([
             'user_id' => 1,
-            'category_id' => 1,
+            'budget_id' => 1,
             'place' => 'Salvation Pizza',
             'date' => '2018-05-09',
             'price' => '17.02',
@@ -22,7 +22,7 @@ class ExpensesTableSeeder extends Seeder
 
         App\Expense::create([
             'user_id' => 1,
-            'category_id' => 1,
+            'budget_id' => 1,
             'place' => 'Jimmy John\'s',
             'date' => '2018-05-11',
             'price' => '9.18',
@@ -31,7 +31,7 @@ class ExpensesTableSeeder extends Seeder
 
         App\Expense::create([
             'user_id' => 1,
-            'category_id' => 1,
+            'budget_id' => 1,
             'place' => 'Dan\'s Burgers',
             'date' => '2018-05-12',
             'price' => '20.00',

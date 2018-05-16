@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use App\Budget;
 use App\Expense;
 use Auth;
 
@@ -22,7 +22,7 @@ class HomeController extends Controller
         }
 
         $date = $request->session()->get('date');
-        return view('index')->with('categories', Category::take(3)->get())
+        return view('index')->with('navBudgets', Budget::take(3)->get())
             ->with('date', $date);
     }
 
@@ -50,7 +50,7 @@ class HomeController extends Controller
         $remaining = $budget - $spent;
 
         return view('dashboard')->with('expenses', $expenses)
-            ->with('categories', Category::take(3)->get())
+            ->with('navBudgets', Budget::take(3)->get())
             ->with('date', $date)
             ->with('budget', $budget)
             ->with('spent', $spent)

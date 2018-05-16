@@ -12,7 +12,7 @@ class Expense extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'category_id', 'place', 'date', 'price', 'reason'
+        'user_id', 'budget_id', 'place', 'date', 'price', 'reason'
     ];
 
     public function user()
@@ -20,8 +20,8 @@ class Expense extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function category()
+    public function budget()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo('App\Budget');
     }
 }

@@ -16,16 +16,16 @@
         <!-- Left Side Of Navbar -->
         @if (Auth::check())
             <ul class="navbar-nav mr-auto">
-                @foreach($categories as $category)
+                @foreach($navBudgets as $budget)
                     <li class="">
-                        <a class="nav-link text-white" href="{{ route('expense.show', ['id' => $category->id]) }}">{{ $category->name }}</a>
+                        <a class="nav-link text-white" href="{{ route('expense.show', ['id' => $budget->id]) }}">{{ $budget->name }}</a>
                     </li>
                 @endforeach
             </ul>
 
             <ul class="nav navbar-nav mx-auto abs-center-x text-white">
                 @if(Request::is('expense/show/*'))
-                    <li><a href="{{ route('expense.prev', ['id' => $currentCategory->id]) }}" class="nav-link">
+                    <li><a href="{{ route('expense.prev', ['id' => $currentBudget->id]) }}" class="nav-link">
                             <span class="caret-left"></span>
                         </a>
                     </li>
@@ -33,7 +33,7 @@
                         <span>{{ date('F Y', $date) }}</span>
                     </li>
                     <li>
-                        <a href="{{ route('expense.next', ['id' => $currentCategory->id]) }}" class="nav-link">
+                        <a href="{{ route('expense.next', ['id' => $currentBudget->id]) }}" class="nav-link">
                             <span class="caret-right"></span>
                         </a>
                     </li>

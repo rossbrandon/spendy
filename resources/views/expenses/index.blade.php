@@ -94,7 +94,7 @@
                 <a href="{{ route('expense.create') }}" class="btn btn-success float-right">Add Entry</a>
             </div>
             @else
-                <h2 class="text-center">No transactions found for this category</h2>
+                <h2 class="text-center">No transactions found for this budget category</h2>
             @endif
         </div>
     </div>

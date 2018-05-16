@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Expense;
-use App\Category;
+use App\Budget;
 use Auth;
 
 class ExpensesController extends Controller
@@ -18,7 +18,7 @@ class ExpensesController extends Controller
     public function index(Request $request)
     {
         $date = $request->session()->get('date');
-        return view('expense.index')->with('expenses', Expense::all())
+        return view('expenses.index')->with('expenses', Expense::all())
             ->with('date', $date);
     }
 
@@ -31,8 +31,8 @@ class ExpensesController extends Controller
     public function create(Request $request)
     {
         $date = $request->session()->get('date');
-        return view('expense.create')->with('allCategories', Category::all())
-            ->with('categories', Category::take(3)->get())
+        return view('expenses.create')->with('budgets', Budget::all())
+            ->with('navBudgets', Budget::take(3)->get())
             ->with('date', $date);
     }
 
@@ -45,7 +45,7 @@ class ExpensesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'category_id' => 'required',
+            'budget_id' => 'required',
             'place' => 'required',
             'date' => 'required|date',
             'price' => 'required|between:0,99.99',
@@ -54,14 +54,14 @@ class ExpensesController extends Controller
 
         $expense = Expense::create([
             'user_id' => Auth::id(),
-            'category_id' => $request->category_id,
+            'budget_id' => $request->budget_id,
             'place' => $request->place,
             'date' => $request->date,
             'price' => $request->price,
             'reason' => $request->reason
         ]);
 
-        return redirect()->route('expense.show', ['id' => $expense->category->id]);
+        return redirect()->route('expense.show', ['id' => $expense->budget->id]);
     }
 
     /**
@@ -77,18 +77,16 @@ class ExpensesController extends Controller
         $budget = 100.00;
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
-        $expenses = Expense::where('category_id', $id)
+        $expenses = Expense::where('budget_id', $id)
             ->where('date', '>=', $firstDayOfMonth)
             ->where('date', '<=', $lastDayOfMonth)
             ->orderBy('date', 'asc')
             ->get();
         $spent = $expenses->sum('price');
         $remaining = $budget - $spent;
-        $val = number_format($remaining, 2, '.', ',');
-        $absVal = abs($val);
-        return view('expense.index')->with('expenses', $expenses)
-            ->with('categories', Category::take(3)->get())
-            ->with('currentCategory', Category::find($id))
+        return view('expenses.index')->with('expenses', $expenses)
+            ->with('navBudgets', Budget::take(3)->get())
+            ->with('currentBudget', Budget::find($id))
             ->with('date', $date)
             ->with('budget', $budget)
             ->with('spent', $spent)
@@ -107,10 +105,10 @@ class ExpensesController extends Controller
         $date = $request->session()->get('date');
         $expense = Expense::find($id);
 
-        return view('expense.edit')->with('expense', $expense)
-            ->with('allCategories', Category::all())
-            ->with('categories', Category::take(3)->get())
-            ->with('currentCategory', Category::find($id))
+        return view('expenses.edit')->with('expense', $expense)
+            ->with('budgets', Budget::all())
+            ->with('navBudgets', Budget::take(3)->get())
+            ->with('currentBudget', Budget::find($id))
             ->with('date', $date);
     }
 
@@ -124,7 +122,7 @@ class ExpensesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'category_id' => 'required',
+            'budget_id' => 'required',
             'place' => 'required',
             'date' => 'required|date',
             'price' => 'required|between:0,99.99',
@@ -132,14 +130,14 @@ class ExpensesController extends Controller
         ]);
 
         $expense = Expense::find($id);
-        $expense->category_id = $request->category_id;
+        $expense->budget_id = $request->budget_id;
         $expense->place = $request->place;
         $expense->date = $request->date;
         $expense->price = $request->price;
         $expense->reason = $request->reason;
         $expense->save();
 
-        return redirect()->route('expense.show', ['id' => $expense->category->id]);
+        return redirect()->route('expense.show', ['id' => $expense->budget->id]);
     }
 
     /**
