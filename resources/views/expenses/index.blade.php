@@ -32,7 +32,7 @@
             <div class="col-lg-10 offset-1">
                 <div class="card-group">
                     <div class="card text-white bg-dark">
-                        <div class="card-header text-center">{{ __('Days of Spending') }}</div>
+                        <div class="card-header text-center">{{ __('Transactions') }}</div>
                         <div class="card-body">
                             <h4 class="text-center">{{ count($expenses) }}</h4>
                         </div>
