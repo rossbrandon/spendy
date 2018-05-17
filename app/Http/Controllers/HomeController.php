@@ -22,7 +22,8 @@ class HomeController extends Controller
         }
 
         $date = $request->session()->get('date');
-        return view('index')->with('navBudgets', Budget::take(3)->get())
+        $budgets = Budget::where('user_id', Auth::id())->get();
+        return view('index')->with('navBudgets', $budgets->take(3))
             ->with('date', $date);
     }
 
@@ -45,6 +46,7 @@ class HomeController extends Controller
             ->where('date', '>=', $firstDayOfMonth)
             ->where('date', '<=', $lastDayOfMonth)
             ->get();
+        $userBudgets = Budget::where('user_id', Auth::id())->get();
 
         $totalBudget = 0;
         $totalSpent = 0;
@@ -59,7 +61,7 @@ class HomeController extends Controller
         $totalRemaining = $totalBudget - $totalSpent;
 
         return view('dashboard')->with('budgets', $budgets)
-            ->with('navBudgets', $budgets->take(3))
+            ->with('navBudgets', $userBudgets->take(3))
             ->with('date', $date)
             ->with('totalBudget', $totalBudget)
             ->with('totalSpent', $totalSpent)

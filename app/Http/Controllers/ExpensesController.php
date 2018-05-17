@@ -31,8 +31,9 @@ class ExpensesController extends Controller
     public function create(Request $request)
     {
         $date = $request->session()->get('date');
-        return view('expenses.create')->with('budgets', Budget::all())
-            ->with('navBudgets', Budget::take(3)->get())
+        $budgets = Budget::where('user_id', Auth::id())->get();
+        return view('expenses.create')->with('budgets', $budgets)
+            ->with('navBudgets', $budgets->take(3))
             ->with('date', $date);
     }
 
@@ -78,6 +79,7 @@ class ExpensesController extends Controller
         $budget = Budget::where('user_id', Auth::id())
             ->where('name', $name)
             ->first();
+        $userBudgets = Budget::where('user_id', Auth::id())->get();
 
         if ($budget) {
             $expenses = Expense::where('budget_id', $budget->id)
@@ -94,7 +96,7 @@ class ExpensesController extends Controller
         }
 
         return view('expenses.index')->with('expenses', $expenses)
-            ->with('navBudgets', Budget::take(3)->get())
+            ->with('navBudgets', $userBudgets->take(3))
             ->with('date', $date)
             ->with('budget', $budget)
             ->with('spent', $spent)
@@ -112,10 +114,11 @@ class ExpensesController extends Controller
     {
         $date = $request->session()->get('date');
         $expense = Expense::find($id);
+        $budgets = Budget::where('user_id', Auth::id())->get();
 
         return view('expenses.edit')->with('expense', $expense)
-            ->with('budgets', Budget::all())
-            ->with('navBudgets', Budget::take(3)->get())
+            ->with('budgets', $budgets)
+            ->with('navBudgets', $budgets->take(3))
             ->with('budget', Budget::find($id))
             ->with('date', $date);
     }

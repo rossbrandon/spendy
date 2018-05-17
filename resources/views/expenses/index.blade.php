@@ -15,7 +15,7 @@
                         </small>
                     </h2>
                 @else
-                    <h2>{{ __('Progress') }}</h2>
+                    <h2>{{ $budget->name }}</h2>
                 @endif
                 <div class="progress">
                     @if ($remaining >= 0)
