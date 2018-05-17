@@ -42,6 +42,8 @@ class HomeController extends Controller
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
         $budgets = Budget::where('user_id', Auth::id())
+            ->where('date', '>=', $firstDayOfMonth)
+            ->where('date', '<=', $lastDayOfMonth)
             ->get();
 
         $totalBudget = 0;
