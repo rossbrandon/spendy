@@ -60,7 +60,10 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-block btn-primary">
+                                <a href="{{ URL::previous() }}" class="btn btn-block btn-light">
+                                    {{ __('Cancel') }}
+                                </a>
+                                <button type="submit" class="btn btn-block btn-success">
                                     {{ __('Create Expense') }}
                                 </button>
                             </div>

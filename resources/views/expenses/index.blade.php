@@ -4,7 +4,7 @@
 @if ($budget)
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12">
                 @if(date('m', $date) == date('m'))
                     <h2>{{ $budget->name }}
                         <small class="float-right">
@@ -29,7 +29,7 @@
         <br />
         <br />
         <div class="row">
-            <div class="col-lg-10 offset-1">
+            <div class="col-12">
                 <div class="card-group">
                     <div class="card text-white bg-dark">
                         <div class="card-header text-center">{{ __('Transactions') }}</div>
@@ -72,35 +72,37 @@
     <div class="container">
         <div class="row">
             @if (count($expenses) > 0)
-            <h2>{{ __('Transactions') }}</h2>
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered table-striped">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Day</th>
-                        <th scope="col">Place</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Reason</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($expenses as $expense)
-                        <tr class="clickable-row" data-href="{{ route('expense.edit', ['id' => $expense->id]) }}">
-                            <td>{{ date('jS', strtotime($expense->date)) }}</td>
-                            <td>{{ $expense->place }}</td>
-                            <td>${{ $expense->price }}</td>
-                            <td>{{ $expense->reason }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('expense.edit', ['id' => $expense->id]) }}" class="btn btn-sm btn-info">Edit</a>
-                                <a href="{{ route('expense.delete', ['id' => $expense->id]) }}" class="btn btn-sm btn-danger">Delete</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                <a href="{{ route('expense.create') }}" class="btn btn-success float-right">Add Entry</a>
-            </div>
+                <div class="col-12">
+                    <h2>{{ __('Transactions') }}</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Day</th>
+                                <th scope="col">Place</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($expenses as $expense)
+                                <tr class="clickable-row" data-href="{{ route('expense.edit', ['id' => $expense->id]) }}">
+                                    <td>{{ date('jS', strtotime($expense->date)) }}</td>
+                                    <td>{{ $expense->place }}</td>
+                                    <td>${{ $expense->price }}</td>
+                                    <td>{{ $expense->reason }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('expense.edit', ['id' => $expense->id]) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <a href="{{ route('expense.delete', ['id' => $expense->id]) }}" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <a href="{{ route('expense.create') }}" class="btn btn-success float-right">Add Entry</a>
+                    </div>
+                </div>
             @else
                 <h2 class="text-center">No transactions found for this budget category... <a href="{{ route('expense.create') }}">Create One!</a></h2>
             @endif
@@ -109,7 +111,7 @@
 @else
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12">
                 <h2 class="text-center">No budget found... <a href="{{ route('budget.create') }}">Create One!</a></h2>
             </div>
         </div>
