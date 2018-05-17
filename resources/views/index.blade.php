@@ -10,3 +10,4 @@
             <a class="btn btn-success btn-lg" href="{{ route('dashboard') }}" role="button">Let's Get Started!</a>
         </div>
 @endsection
+@include('includes.footer')
