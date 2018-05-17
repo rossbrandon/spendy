@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12">
                 @if(date('m', $date) == date('m'))
                     <h2>{{ __('Total Progress') }}
                         <small class="float-right">
@@ -28,7 +28,7 @@
         <br />
         <br />
         <div class="row">
-            <div class="col-lg-10 offset-1">
+            <div class="col-12">
                 <div class="card-group">
                     <div class="card text-white bg-dark">
                         <div class="card-header text-center">{{ __('Total Budget') }}</div>
@@ -65,26 +65,28 @@
     <div class="container">
         @if (count($budgets) > 0)
             <div class="row">
-                <h2>{{ __('Your Budgets:') }}</h2>
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Month</th>
-                            <th scope="col">Amount</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($budgets as $budget)
-                                <tr class="clickable-row" data-href="{{ route('expense.show', ['name' => $budget->name]) }}">
-                                    <td class="text-center">{{ $budget->name }}</td>
-                                    <td>{{ date('F Y', strtotime($budget->date)) }}</td>
-                                    <td>${{ $budget->amount }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="col-12">
+                    <h2>{{ __('Your Budgets:') }}</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Month</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($budgets as $budget)
+                                    <tr class="clickable-row" data-href="{{ route('expense.show', ['name' => $budget->name]) }}">
+                                        <td class="text-center">{{ $budget->name }}</td>
+                                        <td>{{ date('F Y', strtotime($budget->date)) }}</td>
+                                        <td>${{ $budget->amount }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         @else
