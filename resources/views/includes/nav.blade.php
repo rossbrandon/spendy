@@ -37,7 +37,7 @@
                             <span class="caret-right"></span>
                         </a>
                     </li>
-                @elseif (Request::is('budgets') || Request::is('budget/*'))
+                @elseif (Request::is('/') || Request::is('budgets') || Request::is('budget/*'))
 
                 @else
                     <li><a href="{{ route('prev') }}" class="nav-link">
