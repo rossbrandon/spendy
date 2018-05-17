@@ -19,7 +19,7 @@ class CreateExpensesTable extends Migration
             $table->string('place');
             $table->date('date');
             $table->decimal('price', 18, 2);
-            $table->text('reason');
+            $table->text('reason')->nullable();
             $table->timestamps();
         });
     }
