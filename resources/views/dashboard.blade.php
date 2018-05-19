@@ -82,7 +82,11 @@
                                     <tr class="clickable-row" data-href="{{ route('expense.show', ['name' => $budget->name]) }}">
                                         <td class="text-center">{{ $budget->name }}</td>
                                         <td>${{ number_format($budget->amount, 2, '.', ',') }}</td>
-                                        <td>${{ number_format($budgetSpent[$budget->id], 2, '.', ',') }}</td>
+                                        @if ($budgetSpent[$budget->id] > $budget->amount)
+                                            <td class="text-danger">${{ number_format($budgetSpent[$budget->id], 2, '.', ',') }}</td>
+                                        @else
+                                            <td>${{ number_format($budgetSpent[$budget->id], 2, '.', ',') }}</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
