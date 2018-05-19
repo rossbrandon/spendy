@@ -2,10 +2,11 @@
 
 @section('content')
     <div class="container">
+        @include('includes.monthswitcher')
         <div class="row">
             <div class="col-12">
                 @if(date('m', $date) == date('m'))
-                    <h2>{{ __('Total Progress') }}
+                    <h2>{{ __('My Spending') }}
                         <small class="float-right">
                             {{ __('Day') }}
                             {{ date('d') }}
@@ -14,7 +15,7 @@
                         </small>
                     </h2>
                 @else
-                    <h2>{{ __('Total Progress') }}</h2>
+                    <h2>{{ __('My Spending') }}</h2>
                 @endif
                 <div class="progress">
                     @if ($totalRemaining > 0)
@@ -30,12 +31,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="card-group">
-                    <div class="card text-white bg-dark">
+                    <a href="{{ route('budgets') }}" class="card text-white bg-dark">
                         <div class="card-header text-center">{{ __('Total Budget') }}</div>
                         <div class="card-body">
                             <h4 class="text-center">{{ number_format($totalBudget, 2, '.', ',') }}</h4>
                         </div>
-                    </div>
+                    </a>
                     <div class="card bg-white">
                         <div class="card-header text-center">{{ __('Total Spent') }}</div>
                         <div class="card-body">
@@ -66,7 +67,7 @@
         @if (count($budgets) > 0)
             <div class="row">
                 <div class="col-12">
-                    <h2>{{ __('Your Budgets:') }}</h2>
+                    <h2>{{ __('My Budgets') }}</h2>
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered table-striped">
                             <thead class="thead-dark">

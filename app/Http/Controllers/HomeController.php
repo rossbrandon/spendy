@@ -23,7 +23,7 @@ class HomeController extends Controller
 
         $date = $request->session()->get('date');
         $budgets = Budget::where('user_id', Auth::id())->get();
-        return view('index')->with('navBudgets', $budgets->take(3))
+        return view('index')->with('navBudgets', $budgets->take(5))
             ->with('date', $date);
     }
 
@@ -61,7 +61,7 @@ class HomeController extends Controller
         $totalRemaining = $totalBudget - $totalSpent;
 
         return view('dashboard')->with('budgets', $budgets)
-            ->with('navBudgets', $userBudgets->take(3))
+            ->with('navBudgets', $userBudgets->take(5))
             ->with('date', $date)
             ->with('totalBudget', $totalBudget)
             ->with('totalSpent', $totalSpent)

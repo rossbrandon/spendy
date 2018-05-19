@@ -38,6 +38,22 @@ class ExpensesTableSeeder extends Seeder
             'reason' => 'For 2'
         ]);
 
+        App\Expense::create([
+            'budget_id' => $budget->id,
+            'place' => 'Firehouse',
+            'date' => '2018-05-17',
+            'price' => '2.05',
+            'reason' => 'Bought a soft drink to redeem free sub coupon'
+        ]);
+
+        App\Expense::create([
+            'budget_id' => $budget->id,
+            'place' => 'Chuy\'s',
+            'date' => '2018-05-18',
+            'price' => '16.65',
+            'reason' => 'Nick\'s goodbye lunch :('
+        ]);
+
         $budgetGrocery = Budget::where('name', 'Groceries')->first();
 
         App\Expense::create([
@@ -112,6 +128,32 @@ class ExpensesTableSeeder extends Seeder
             'date' => '2018-05-23',
             'price' => '10.81',
             'reason' => null
+        ]);
+
+        App\Expense::create([
+            'budget_id' => $budgetBills->id,
+            'place' => 'Amli South Shore',
+            'date' => '2018-05-02',
+            'price' => '1506.14',
+            'reason' => 'Rent'
+        ]);
+
+        $budgetMisc = Budget::where('name', 'Misc')->first();
+
+        App\Expense::create([
+            'budget_id' => $budgetMisc->id,
+            'place' => '7-Eleven',
+            'date' => '2018-05-08',
+            'price' => '32.60',
+            'reason' => 'Gas'
+        ]);
+
+        App\Expense::create([
+            'budget_id' => $budgetMisc->id,
+            'place' => 'Exxon',
+            'date' => '2018-05-18',
+            'price' => '38.00',
+            'reason' => 'Gas'
         ]);
     }
 }

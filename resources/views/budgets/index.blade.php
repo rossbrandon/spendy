@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('includes.monthswitcher')
         <div class="row">
             @if (count($budgets) > 0)
                 <div class="col-12">
@@ -13,7 +14,6 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Month</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col">Recurring?</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
@@ -23,7 +23,6 @@
                                     <td>{{ $budget->name }}</td>
                                     <td>{{ date('F Y', strtotime($budget->date)) }}</td>
                                     <td>${{ $budget->amount }}</td>
-                                    <td>Yes</td>
                                     <td class="text-center">
                                         <a href="{{ route('budget.edit', ['id' => $budget->id]) }}" class="btn btn-sm btn-info">Edit</a>
                                         <a href="{{ route('budget.delete', ['id' => $budget->id]) }}" class="btn btn-sm btn-danger">Delete</a>

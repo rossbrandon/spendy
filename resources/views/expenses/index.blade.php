@@ -37,12 +37,12 @@
                             <h4 class="text-center">{{ count($expenses) }}</h4>
                         </div>
                     </div>
-                    <div class="card bg-white">
+                    <a href="{{ route('budget.edit', ['id' => $budget->id]) }}" class="card bg-white">
                         <div class="card-header text-center">{{ __('Budget') }}</div>
                         <div class="card-body">
                             <h4 class="text-center">${{ number_format($budget->amount, 2, '.', ',') }}</h4>
                         </div>
-                    </div>
+                    </a>
                     <div class="card bg-white">
                         <div class="card-header text-center">{{ __('Spent') }}</div>
                         <div class="card-body">

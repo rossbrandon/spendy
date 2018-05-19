@@ -31,7 +31,14 @@ class BudgetsTableSeeder extends Seeder
         App\Budget::create([
             'user_id' => $user->id,
             'name' => 'Bills',
-            'amount' => 1500.00,
+            'amount' => 3000.00,
+            'date' => '2018-05-01'
+        ]);
+
+        App\Budget::create([
+            'user_id' => $user->id,
+            'name' => 'Misc',
+            'amount' => 60.00,
             'date' => '2018-05-01'
         ]);
     }

@@ -18,7 +18,14 @@ class ExpensesController extends Controller
     public function index(Request $request)
     {
         $date = $request->session()->get('date');
-        return view('expenses.index')->with('expenses', Expense::all())
+        $firstDayOfMonth = date('Y-m-01', $date);
+        $lastDayOfMonth = date('Y-m-t', $date);
+        $budgetIds = Budget::where('user_id', Auth::id())->select('id')->get();
+        $expenses = Expense::whereIn('budget_id', $budgetIds)
+            ->where('date', '>=', $firstDayOfMonth)
+            ->where('date', '<=', $lastDayOfMonth)
+            ->get();
+        return view('expenses.index')->with('expenses', $expenses)
             ->with('date', $date);
     }
 
@@ -33,7 +40,7 @@ class ExpensesController extends Controller
         $date = $request->session()->get('date');
         $budgets = Budget::where('user_id', Auth::id())->get();
         return view('expenses.create')->with('budgets', $budgets)
-            ->with('navBudgets', $budgets->take(3))
+            ->with('navBudgets', $budgets->take(5))
             ->with('date', $date);
     }
 
@@ -96,7 +103,7 @@ class ExpensesController extends Controller
         }
 
         return view('expenses.index')->with('expenses', $expenses)
-            ->with('navBudgets', $userBudgets->take(3))
+            ->with('navBudgets', $userBudgets->take(5))
             ->with('date', $date)
             ->with('budget', $budget)
             ->with('spent', $spent)
@@ -118,7 +125,7 @@ class ExpensesController extends Controller
 
         return view('expenses.edit')->with('expense', $expense)
             ->with('budgets', $budgets)
-            ->with('navBudgets', $budgets->take(3))
+            ->with('navBudgets', $budgets->take(5))
             ->with('budget', Budget::find($id))
             ->with('date', $date);
     }
