@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container">
-        @include('includes.monthswitcher')
         <div class="row">
             @if (count($budgets) > 0)
                 <div class="col-12">

@@ -3,6 +3,7 @@
 @section('content')
 @if ($budget)
     <div class="container">
+        @include('includes.monthswitcher')
         <div class="row">
             <div class="col-12">
                 @if(date('m', $date) == date('m'))
