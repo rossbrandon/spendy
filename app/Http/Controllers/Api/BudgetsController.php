@@ -31,7 +31,7 @@ class BudgetsController extends ApiController
      */
     public function expenses($id, $date = null)
     {
-        $date = !$date ? now() : strtotime($date);
+        $date = !$date ? strtotime(now()) : strtotime($date);
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
         $budget = Budget::find($id);
