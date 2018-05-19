@@ -119,12 +119,13 @@ class ExpensesTest extends TestCase
      */
     public function testUpdate()
     {
+        $this->withoutMiddleware();
         $expense = factory(Expense::class)->create();
         $budget = Budget::find($expense->budget_id);
         $data = [
             'budget_id' => $budget->id,
             'place' => 'New Place Updated',
-            'date' => strtotime(date('Y-m-01', strtotime('+3 day', strtotime(now())))),
+            'date' => date('Y-m-01', strtotime('+3 day', strtotime(now()))),
             'price' => 199.97,
             'reason' => 'Automated Testing Updated'
         ];
@@ -132,8 +133,8 @@ class ExpensesTest extends TestCase
         $response = $this->actingAs($budget->user)->post(route('expense.update', ['id' => $expense->id]), $data);
         $this->assertAuthenticated();
         $response->assertStatus(302);
-        $this->assertDatabaseHas('expenses', ['id' => $expense->id]);
-        //$response->assertRedirect(route('expense.show', ['name' => $budget->name]));
+        $this->assertDatabaseHas('expenses', ['place' => $data['place']]);
+        $response->assertRedirect(route('expense.show', ['name' => $budget->name]));
     }
 
     /**

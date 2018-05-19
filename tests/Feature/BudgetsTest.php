@@ -109,18 +109,19 @@ class BudgetsTest extends TestCase
      */
     public function testUpdate()
     {
+        $this->withoutMiddleware();
         $budget = factory(Budget::class)->create();
         $data = [
             'name' => 'New Budget Updated',
-            'date' => strtotime(date('Y-m-01', strtotime('+3 day', strtotime(now())))),
+            'date' => date('Y-m-d', strtotime('+3 day', strtotime(now()))),
             'amount' => 1000.00
         ];
 
         $response = $this->actingAs($budget->user)->post(route('budget.update', ['id' => $budget->id]), $data);
         $this->assertAuthenticated();
         $response->assertStatus(302);
-        $this->assertDatabaseHas('budgets', ['id' => $budget->id]);
-        //$response->assertRedirect(route('budgets'));
+        $this->assertDatabaseHas('budgets', ['name' => $data['name']]);
+        $response->assertRedirect(route('budgets'));
     }
 
     /**

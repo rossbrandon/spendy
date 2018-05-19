@@ -236,6 +236,7 @@ class BudgetsApiTest extends PassportTestCase
             'success',
             'message'
         ]);
+        $this->assertDatabaseHas('budgets', ['name' => $data['name']]);
     }
 
     /**
@@ -282,6 +283,7 @@ class BudgetsApiTest extends PassportTestCase
             'success',
             'message'
         ]);
+        $this->assertDatabaseHas('budgets', ['name' => $data['name']]);
     }
 
     /**
