@@ -83,7 +83,7 @@
                                         <td class="text-center">{{ $budget->name }}</td>
                                         <td>${{ number_format($budget->amount, 2, '.', ',') }}</td>
                                         @if ($budgetSpent[$budget->id] > $budget->amount)
-                                            <td class="text-danger">${{ number_format($budgetSpent[$budget->id], 2, '.', ',') }}</td>
+                                            <td class="text-white bg-danger">${{ number_format($budgetSpent[$budget->id], 2, '.', ',') }}</td>
                                         @else
                                             <td>${{ number_format($budgetSpent[$budget->id], 2, '.', ',') }}</td>
                                         @endif
