@@ -7,6 +7,7 @@ php:
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database spendy_test;'
+  - composer require satooshi/php-coveralls:dev-master
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source --dev
   - php artisan key:generate
@@ -14,6 +15,8 @@ before_script:
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
+  - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - php vendor/bin/coveralls -v
