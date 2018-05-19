@@ -1,10 +1,12 @@
 <?php
 
-$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-$host = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$database = substr($url["path"], 1);
+if (getenv("CLEARDB_DATABASE_URL")) {
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $database = substr($url["path"], 1);
+}
 
 return [
 
@@ -79,9 +81,9 @@ return [
         'testing' => [
             'driver'    => 'mysql',
             'host'      => env('DB_TEST_HOST', 'localhost'),
-            'database'  => env('DB_TEST_DATABASE', 'homestead_test'),
-            'username'  => env('DB_TEST_USERNAME', 'homestead'),
-            'password'  => env('DB_TEST_PASSWORD', 'secret'),
+            'database'  => env('DB_TEST_DATABASE', 'spendy_test'),
+            'username'  => env('DB_TEST_USERNAME', 'spendy'),
+            'password'  => env('DB_TEST_PASSWORD', 'spendy'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
