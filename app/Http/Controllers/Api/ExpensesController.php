@@ -40,7 +40,7 @@ class ExpensesController extends ApiController
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Validation Failed', $validator->errors());
+            return $this->sendError('Validation Failed', $validator->errors(), 400);
         }
 
         $expense = Expense::create([
@@ -83,7 +83,7 @@ class ExpensesController extends ApiController
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendError('Validation Error.', $validator->errors(), 400);
         }
 
         $expense = Expense::find($id);

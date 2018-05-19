@@ -95,7 +95,7 @@ class BudgetsController extends ApiController
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Validation Failed', $validator->errors());
+            return $this->sendError('Validation Failed', $validator->errors(), 400);
         }
 
         $date = date('Y-m-01', strtotime($request->date));
@@ -148,7 +148,7 @@ class BudgetsController extends ApiController
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendError('Validation Error.', $validator->errors(), 400);
         }
 
         $budget = Budget::find($id);

@@ -76,7 +76,7 @@ class ExpensesApiTest extends PassportTestCase
     }
 
     /**
-     * Test REST API  store
+     * Test REST API store
      *
      * @return void
      */
@@ -92,6 +92,28 @@ class ExpensesApiTest extends PassportTestCase
         ];
         $response = $this->postJson('/api/expenses', $data);
         $response->assertStatus(200)->assertJsonStructure([
+            'data',
+            'success',
+            'message'
+        ]);
+    }
+
+    /**
+     * Test REST API store with failed validation
+     *
+     * @return void
+     */
+    public function testStoreFailedValidation()
+    {
+        $budget = factory(Budget::class)->create();
+        $data = [
+            'budget_id' => $budget->id,
+            'date' => date('Y-m-01', strtotime(now())),
+            'price' => 153.53,
+            'reason' => 'Testing 1'
+        ];
+        $response = $this->postJson('/api/expenses', $data);
+        $response->assertStatus(400)->assertJsonStructure([
             'data',
             'success',
             'message'
@@ -127,6 +149,40 @@ class ExpensesApiTest extends PassportTestCase
         ];
         $response = $this->putJson('/api/expenses/' . $expense->id, $data);
         $response->assertStatus(200)->assertJsonStructure([
+            'data',
+            'success',
+            'message'
+        ]);
+    }
+
+    /**
+     * Test REST API expenses update with failed validation
+     *
+     * @return void
+     */
+    public function testUpdateFailedValidation()
+    {
+        $budget = Budget::create([
+            'user_id' => $this->user->id,
+            'name' => 'Test Budget1',
+            'date' => date('Y-m-01', strtotime(now())),
+            'amount' => 198.75
+        ]);
+        $expense = Expense::create([
+            'budget_id' => $budget->id,
+            'place' => 'Test Expense2',
+            'date' => date('Y-m-01', strtotime(now())),
+            'price' => 198.75,
+            'reason' => 'Testing 2'
+        ]);
+        $data = [
+            'budget_id' => $budget->id,
+            'date' => date('Y-m-01', strtotime(now())),
+            'price' => 298.73,
+            'reason' => 'Testing 2 Updated'
+        ];
+        $response = $this->putJson('/api/expenses/' . $expense->id, $data);
+        $response->assertStatus(400)->assertJsonStructure([
             'data',
             'success',
             'message'

@@ -239,6 +239,26 @@ class BudgetsApiTest extends PassportTestCase
     }
 
     /**
+     * Test REST API budgets store failed validation
+     *
+     * @return void
+     */
+    public function testStoreFailedValidation()
+    {
+        $data = [
+            'user_id' => $this->user->id,
+            'date' => date('Y-m-01', strtotime(now())),
+            'amount' => 1198.75
+        ];
+        $response = $this->postJson('/api/budgets', $data);
+        $response->assertStatus(400)->assertJsonStructure([
+            'data',
+            'success',
+            'message'
+        ]);
+    }
+
+    /**
      * Test REST API budgets update
      *
      * @return void
@@ -258,6 +278,31 @@ class BudgetsApiTest extends PassportTestCase
         ];
         $response = $this->putJson('/api/budgets/' . $budget->id, $data);
         $response->assertStatus(200)->assertJsonStructure([
+            'data',
+            'success',
+            'message'
+        ]);
+    }
+
+    /**
+     * Test REST API budgets update with failed validation
+     *
+     * @return void
+     */
+    public function testUpdateFailedValidation()
+    {
+        $budget = Budget::create([
+            'user_id' => $this->user->id,
+            'name' => 'Test Budget7',
+            'date' => date('Y-m-01', strtotime(now())),
+            'amount' => 1198.75
+        ]);
+        $data = [
+            'date' => date('Y-m-01', strtotime(now())),
+            'amount' => 1098.75
+        ];
+        $response = $this->putJson('/api/budgets/' . $budget->id, $data);
+        $response->assertStatus(400)->assertJsonStructure([
             'data',
             'success',
             'message'
