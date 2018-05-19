@@ -55,7 +55,7 @@ class UsersApiTest extends PassportTestCase
 
 
     /**
-     * Test REST API users me
+     * Test REST API users show
      *
      * @return void
      */
