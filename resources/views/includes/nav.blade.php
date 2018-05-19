@@ -8,9 +8,15 @@
             {{ config('app.name', 'Laravel') }}
         </a>
     @endif
-    <div class="navbar-brand d-md-none">
-        <span>{{ date('F Y', $date) }}</span>
-    </div>
+
+    @if (Request::is('dashboard') || Request::is('expense/show/*'))
+        <div class="navbar-brand d-md-none">
+            <span>{{ date('F Y', $date) }}</span>
+        </div>
+    @else
+
+    @endif
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,13 +32,13 @@
                 @endforeach
             </ul>
 
-            <div class="nav navbar-nav mx-auto abs-center-x text-white d-none d-md-block">
-                @if (Request::is('dashboard') || Request::is('expense/show/*'))
+            @if (Request::is('dashboard') || Request::is('expense/show/*'))
+                <div class="nav navbar-nav mx-auto abs-center-x text-white d-none d-md-block">
                     <span>{{ date('F Y', $date) }}</span>
-                @else
+                </div>
+            @else
 
-                @endif
-            </div>
+            @endif
         @endif
 
         <!-- Right Side Of Navbar -->
