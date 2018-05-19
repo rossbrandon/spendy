@@ -94,7 +94,6 @@
                                     <td>${{ $expense->price }}</td>
                                     <td>{{ $expense->reason }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('expense.edit', ['id' => $expense->id]) }}" class="btn btn-sm btn-info">Edit</a>
                                         <a href="{{ route('expense.delete', ['id' => $expense->id]) }}" class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>

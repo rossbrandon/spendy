@@ -23,7 +23,6 @@
                                     <td>{{ date('F Y', strtotime($budget->date)) }}</td>
                                     <td>${{ $budget->amount }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('budget.edit', ['id' => $budget->id]) }}" class="btn btn-sm btn-info">Edit</a>
                                         <a href="{{ route('budget.delete', ['id' => $budget->id]) }}" class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>
