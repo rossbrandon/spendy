@@ -31,7 +31,11 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "tests/TestCase.php",
+            "tests/Feature/Api/PassportTestCase.php"
+        ]
     },
     "extra": {
         "laravel": {
