@@ -15,3 +15,24 @@ Track expenses in your own custom budget categories and get your spending under 
 * PHP 7.2
 * MySQL
 * ReactJS/Redux (coming soon)
+
+## Installation
+
+[Valet](https://laravel.com/docs/5.6/valet) or 
+[Valet Plus for Mac](https://github.com/weprovide/valet-plus)
+are recommended for local hosting/development.
+
+Run the following commands:
+
+```bash
+composer install
+```
+```bash
+php artisan migrate
+```
+```bash
+php artisan db:seed
+```
+```bash
+php artisan passport:install
+```
