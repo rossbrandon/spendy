@@ -19,6 +19,22 @@ class HomeTest extends TestCase
     {
         $user = factory(User::class)->create();
 
+        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get('/');
+        $this->assertAuthenticated();
+        $response->assertStatus(200);
+        $response->assertViewHas('navBudgets');
+        $response->assertViewHas('date');
+    }
+
+    /**
+     * Test home controller index route
+     *
+     * @return void
+     */
+    public function testIndexNoDate()
+    {
+        $user = factory(User::class)->create();
+
         $response = $this->actingAs($user)->get('/');
         $this->assertAuthenticated();
         $response->assertStatus(200);

@@ -17,16 +17,7 @@ class ExpensesController extends Controller
      */
     public function index(Request $request)
     {
-        $date = $request->session()->get('date');
-        $firstDayOfMonth = date('Y-m-01', $date);
-        $lastDayOfMonth = date('Y-m-t', $date);
-        $budgetIds = Budget::where('user_id', Auth::id())->select('id')->get();
-        $expenses = Expense::whereIn('budget_id', $budgetIds)
-            ->where('date', '>=', $firstDayOfMonth)
-            ->where('date', '<=', $lastDayOfMonth)
-            ->get();
-        return view('expenses.index')->with('expenses', $expenses)
-            ->with('date', $date);
+        //
     }
 
     /**

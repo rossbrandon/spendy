@@ -20,9 +20,28 @@ class ExpensesTest extends TestCase
     public function testShow()
     {
         $budget = factory(Budget::class)->create();
-        $user = User::find($budget->user_id);
 
-        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get(route('expense.show', ['name' => $budget->name]));
+        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('expense.show', ['name' => $budget->name]));
+        $this->assertAuthenticated();
+        $response->assertStatus(200);
+        $response->assertViewHas('expenses');
+        $response->assertViewHas('navBudgets');
+        $response->assertViewHas('date');
+        $response->assertViewHas('budget');
+        $response->assertViewHas('spent');
+        $response->assertViewHas('remaining');
+    }
+
+    /**
+     * Test expense controller show route
+     *
+     * @return void
+     */
+    public function testShowNoBudget()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get(route('expense.show', ['name' => 'fake']));
         $this->assertAuthenticated();
         $response->assertStatus(200);
         $response->assertViewHas('expenses');
@@ -41,9 +60,8 @@ class ExpensesTest extends TestCase
     public function testCreate()
     {
         $budget = factory(Budget::class)->create();
-        $user = User::find($budget->user_id);
 
-        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get(route('expense.create'));
+        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('expense.create'));
         $this->assertAuthenticated();
         $response->assertStatus(200);
         $response->assertViewHas('budgets');
@@ -59,7 +77,6 @@ class ExpensesTest extends TestCase
     public function testStore()
     {
         $budget = factory(Budget::class)->create();
-        $user = User::find($budget->user_id);
         $data = [
             'budget_id' => $budget->id,
             'place' => 'New Place',
@@ -68,7 +85,7 @@ class ExpensesTest extends TestCase
             'reason' => 'Automated Testing'
         ];
 
-        $response = $this->actingAs($user)->post(route('expense.store'), $data);
+        $response = $this->actingAs($budget->user)->post(route('expense.store'), $data);
         $this->assertAuthenticated();
         $response->assertStatus(302);
         $this->assertDatabaseHas('expenses', ['place' => $data['place']]);
@@ -84,9 +101,8 @@ class ExpensesTest extends TestCase
     {
         $budget = factory(Budget::class)->create();
         $expense = factory(Expense::class)->create();
-        $user = User::find($budget->user_id);
 
-        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get(route('expense.edit', ['id' => $expense->id]));
+        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('expense.edit', ['id' => $expense->id]));
         $this->assertAuthenticated();
         $response->assertStatus(200);
         $response->assertViewHas('expense');
@@ -105,7 +121,6 @@ class ExpensesTest extends TestCase
     {
         $budget = factory(Budget::class)->create();
         $expense = factory(Expense::class)->create();
-        $user = User::find($budget->user_id);
         $data = [
             'budget_id' => $budget->id,
             'place' => 'New Place Updated',
@@ -114,7 +129,7 @@ class ExpensesTest extends TestCase
             'reason' => 'Automated Testing Updated'
         ];
 
-        $response = $this->actingAs($user)->post(route('expense.update', ['id' => $expense->id]), $data);
+        $response = $this->actingAs($budget->user)->post(route('expense.update', ['id' => $expense->id]), $data);
         $this->assertAuthenticated();
         $response->assertStatus(302);
         $this->assertDatabaseHas('expenses', ['id' => $expense->id]);
@@ -129,9 +144,8 @@ class ExpensesTest extends TestCase
     public function testPrev()
     {
         $budget = factory(Budget::class)->create();
-        $user = User::find($budget->user_id);
 
-        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get(route('expense.prev', ['name' => $budget->name]));
+        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('expense.prev', ['name' => $budget->name]));
         $this->assertAuthenticated();
         $response->assertSessionHas('date', strtotime(date('Y-m-01', strtotime('-1 month', strtotime(now())))));
         $response->assertRedirect(route('expense.show', ['name' => $budget->name]));
@@ -145,9 +159,8 @@ class ExpensesTest extends TestCase
     public function testNext()
     {
         $budget = factory(Budget::class)->create();
-        $user = User::find($budget->user_id);
 
-        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get(route('expense.next', ['name' => $budget->name]));
+        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('expense.next', ['name' => $budget->name]));
         $this->assertAuthenticated();
         $response->assertSessionHas('date', strtotime(date('Y-m-01', strtotime('+1 month', strtotime(now())))));
         $response->assertRedirect(route('expense.show', ['name' => $budget->name]));
@@ -162,9 +175,8 @@ class ExpensesTest extends TestCase
     {
         $budget = factory(Budget::class)->create();
         $expense = factory(Expense::class)->create();
-        $user = User::find($budget->user_id);
 
-        $response = $this->actingAs($user)->get(route('expense.delete', ['id' => $expense->id]));
+        $response = $this->actingAs($budget->user)->get(route('expense.delete', ['id' => $expense->id]));
         $this->assertAuthenticated();
         $this->assertDatabaseMissing('expenses', ['id' => $expense->id]);
         $response->assertStatus(302);
