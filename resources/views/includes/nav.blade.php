@@ -8,6 +8,9 @@
             {{ config('app.name', 'Laravel') }}
         </a>
     @endif
+    <div class="navbar-brand d-md-none">
+        <span>{{ date('F Y', $date) }}</span>
+    </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,37 +26,13 @@
                 @endforeach
             </ul>
 
-            <ul class="nav navbar-nav mx-auto abs-center-x text-white">
-                @if (Request::is('expense/show/*'))
-                    <li><a href="{{ route('expense.prev', ['name' => $budget->name]) }}" class="nav-link">
-                            <span class="caret-left"></span>
-                        </a>
-                    </li>
-                    <li class="mt-2">
-                        <span>{{ date('F Y', $date) }}</span>
-                    </li>
-                    <li>
-                        <a href="{{ route('expense.next', ['name' => $budget->name]) }}" class="nav-link">
-                            <span class="caret-right"></span>
-                        </a>
-                    </li>
-                @elseif (Request::is('dashboard'))
-                    <li><a href="{{ route('prev') }}" class="nav-link">
-                            <span class="caret-left"></span>
-                        </a>
-                    </li>
-                    <li class="mt-2">
-                        <span>{{ date('F Y', $date) }}</span>
-                    </li>
-                    <li>
-                        <a href="{{ route('next') }}" class="nav-link">
-                            <span class="caret-right"></span>
-                        </a>
-                    </li>
+            <div class="nav navbar-nav mx-auto abs-center-x text-white d-none d-md-block">
+                @if (Request::is('dashboard') || Request::is('expense/show/*'))
+                    <span>{{ date('F Y', $date) }}</span>
                 @else
 
                 @endif
-            </ul>
+            </div>
         @endif
 
         <!-- Right Side Of Navbar -->
