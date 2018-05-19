@@ -31,8 +31,8 @@ class ApiTest extends PassportTestCase
     public function testSendError()
     {
         $apiController = new ApiController();
-        $response = $apiController->sendError('Fake error message');
-        $expected = '{"success":false,"message":"Fake error message"}';
+        $response = $apiController->sendError('Fake error message', ['error' => 'required']);
+        $expected = '{"success":false,"message":"Fake error message","data":{"error":"required"}}';
         $this->assertJsonStringEqualsJsonString(json_encode($response->getData()), $expected);
     }
 }

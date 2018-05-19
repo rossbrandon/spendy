@@ -111,11 +111,9 @@ class BudgetsTest extends TestCase
     {
         $budget = factory(Budget::class)->create();
         $data = [
-            'user_id' => $budget->user->id,
             'name' => 'New Budget Updated',
             'date' => strtotime(date('Y-m-01', strtotime('+3 day', strtotime(now())))),
-            'amount' => 1000.00,
-            'reason' => 'Automated Testing Updated'
+            'amount' => 1000.00
         ];
 
         $response = $this->actingAs($budget->user)->post(route('budget.update', ['id' => $budget->id]), $data);
@@ -138,5 +136,31 @@ class BudgetsTest extends TestCase
         $this->assertAuthenticated();
         $this->assertDatabaseMissing('budgets', ['id' => $budget->id]);
         $response->assertStatus(302);
+    }
+
+    /**
+     * Test User-Budget relationship
+     *
+     * @return void
+     */
+    public function testUserBudgets()
+    {
+        $budget = factory(Budget::class)->create();
+        $user = User::find($budget->user_id);
+        $budgets = $user->budgets();
+        $this->assertNotEmpty($budgets);
+    }
+
+    /**
+     * Test User-Budget relationship
+     *
+     * @return void
+     */
+    public function testBudgetExpenses()
+    {
+        $expense = factory(Expense::class)->create();
+        $budget = Budget::find($expense->budget_id);
+        $expenses = $budget->expenses();
+        $this->assertNotEmpty($expenses);
     }
 }

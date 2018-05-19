@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Budget;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
@@ -49,7 +50,8 @@ class HomeTest extends TestCase
      */
     public function testDashboard()
     {
-        $user = factory(User::class)->create();
+        $budget = factory(Budget::class)->create();
+        $user = User::find($budget->user_id);
 
         $response = $this->actingAs($user)->get('/dashboard');
         $this->assertAuthenticated();

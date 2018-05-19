@@ -119,8 +119,8 @@ class ExpensesTest extends TestCase
      */
     public function testUpdate()
     {
-        $budget = factory(Budget::class)->create();
         $expense = factory(Expense::class)->create();
+        $budget = Budget::find($expense->budget_id);
         $data = [
             'budget_id' => $budget->id,
             'place' => 'New Place Updated',
