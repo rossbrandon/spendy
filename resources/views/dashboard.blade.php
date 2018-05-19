@@ -73,16 +73,16 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col">Month</th>
                                 <th scope="col">Amount</th>
+                                <th scope="col">Spent</th>
                             </tr>
                             </thead>
                             <tbody>
                                 @foreach ($budgets as $budget)
                                     <tr class="clickable-row" data-href="{{ route('expense.show', ['name' => $budget->name]) }}">
                                         <td class="text-center">{{ $budget->name }}</td>
-                                        <td>{{ date('F Y', strtotime($budget->date)) }}</td>
-                                        <td>${{ $budget->amount }}</td>
+                                        <td>${{ number_format($budget->amount, 2, '.', ',') }}</td>
+                                        <td>${{ number_format($budgetSpent[$budget->id], 2, '.', ',') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
