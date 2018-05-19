@@ -6,6 +6,11 @@ if (getenv("CLEARDB_DATABASE_URL")) {
     $username = $url["user"];
     $password = $url["pass"];
     $database = substr($url["path"], 1);
+} else {
+    $host = 'localhost';
+    $username = 'spendy';
+    $password = 'spendy';
+    $database = 'spendy_test';
 }
 
 return [
