@@ -33,6 +33,9 @@
             "Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always"
+    }
     "extra": {
         "laravel": {
             "dont-discover": [
