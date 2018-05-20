@@ -51,6 +51,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('users.profile') }}">My Profile</a>
                         <a class="dropdown-item" href="{{ route('budgets') }}">My Budgets</a>
                         @if(Auth::user()->admin)
                             <a class="dropdown-item" href="#admin">Admin</a>

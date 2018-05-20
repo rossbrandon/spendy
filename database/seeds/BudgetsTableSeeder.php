@@ -12,7 +12,7 @@ class BudgetsTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::where('email', 'rosstafarian1@gmail.com')->first();
+        $user = User::where('email', 'susieque@example.com')->first();
 
         App\Budget::create([
             'user_id' => $user->id,
@@ -37,7 +37,7 @@ class BudgetsTableSeeder extends Seeder
 
         App\Budget::create([
             'user_id' => $user->id,
-            'name' => 'Misc',
+            'name' => 'Gas',
             'amount' => 60.00,
             'date' => '2018-05-01'
         ]);

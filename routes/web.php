@@ -20,6 +20,16 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
 
+    Route::get('/profile', [
+        'uses' => 'UsersController@index',
+        'as' => 'users.profile'
+    ]);
+
+    Route::post('/profile/update', [
+        'uses' => 'UsersController@update',
+        'as' => 'users.profile.update'
+    ]);
+
     Route::get('/dashboard', [
         'uses' => 'HomeController@dashboard',
         'as' => 'dashboard'
