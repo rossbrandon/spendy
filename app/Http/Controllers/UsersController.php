@@ -35,16 +35,13 @@ class UsersController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
-            'password_confirm' => 'required'
+            'password' => 'required'
         ]);
 
         $user = Auth::user();
 
-        if ($request->password == $request->password_confirm) {
-            if ($request->has('password') && $request->password != null && $request->password != '') {
-                $user->password = bcrypt($request->password);
-            }
+        if ($request->has('password') && $request->password != null && $request->password != '') {
+            $user->password = bcrypt($request->password);
         }
         $user->name = $request->name;
         $user->email = $request->email;

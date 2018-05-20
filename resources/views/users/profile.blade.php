@@ -24,10 +24,6 @@
                             <input type="password" name="password" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="password_confirm">Confirm New Password</label>
-                            <input type="password" name="password_confirm" class="form-control" />
-                        </div>
-                        <div class="form-group">
                             <div class="text-center">
                                 <a href="{{ URL::previous() }}" class="btn btn-block btn-light">
                                     {{ __('Cancel') }}

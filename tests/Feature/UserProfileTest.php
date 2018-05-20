@@ -41,8 +41,7 @@ class UserProfileTest extends TestCase
         $data = [
             'name' => 'New Username',
             'email' => 'newfakeemail@example.com',
-            'password' => bcrypt('stupidnewpass'),
-            'password_confirm' => bcrypt('stupidnewpass')
+            'password' => bcrypt('stupidnewpass')
         ];
 
         $response = $this->actingAs($user)->post(route('users.profile.update', ['id' => $user->id]), $data);
