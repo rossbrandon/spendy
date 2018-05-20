@@ -24,7 +24,7 @@ Track expenses in your own custom budget categories and get your spending under 
     * [Valet](https://laravel.com/docs/5.6/valet) or [Valet Plus for Mac](https://github.com/weprovide/valet-plus#installation)
 are recommended for local hosting/development
 
-4. Run the following commands:
+4. Run the following commands in the project's directory:
 
 ```bash
 composer install
