@@ -13,16 +13,18 @@ Track expenses in your own custom budget categories and get your spending under 
 
 * Laravel 5.6
 * PHP 7.2
-* MySQL
+* MySQL (or database of your choice)
 * ReactJS/Redux (coming soon)
 
 ## Installation
 
-[Valet](https://laravel.com/docs/5.6/valet) or 
-[Valet Plus for Mac](https://github.com/weprovide/valet-plus)
-are recommended for local hosting/development.
+1. Install PHP >= 7.1 `brew install php`
+2. Install [Composer](https://getcomposer.org/) `brew install composer`
+3. Install local web server and database
+    * [Valet](https://laravel.com/docs/5.6/valet) or [Valet Plus for Mac](https://github.com/weprovide/valet-plus#installation)
+are recommended for local hosting/development
 
-Run the following commands:
+4. Run the following commands:
 
 ```bash
 composer install
