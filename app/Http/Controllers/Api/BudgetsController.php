@@ -57,8 +57,7 @@ class BudgetsController extends ApiController
         $date = strtotime($date);
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
-        $budgets = Budget::where('user_id', Auth::id())
-            ->get();
+        $budgets = Budget::where('user_id', Auth::id())->get();
 
         $totalBudget = 0;
         $totalSpent = 0;
@@ -83,18 +82,19 @@ class BudgetsController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'date' => 'required|date',
-            'amount' => 'required|between:0,99.99'
-        ]);
+        $validator = Validator::make($request->all(),
+            [
+                'name' => 'required',
+                'date' => 'required|date',
+                'amount' => 'required|between:0,99.99'
+            ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Validation Failed', $validator->errors(), 400);
         }
 
@@ -113,12 +113,12 @@ class BudgetsController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  string  $param
+     * @param  string $param
      * @return \Illuminate\Http\Response
      */
     public function show($param)
     {
-        if (\DateTime::createFromFormat('Y-m-d', $param) !== FALSE) {
+        if (\DateTime::createFromFormat('Y-m-d', $param) !== false) {
             $firstDayOfMonth = date('Y-m-01', strtotime($param));
             $lastDayOfMonth = date('Y-m-t', strtotime($param));
             $data = Budget::where('user_id', Auth::id())
@@ -135,19 +135,20 @@ class BudgetsController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'date' => 'required|date',
-            'amount' => 'required|between:0,99.99'
-        ]);
+        $validator = Validator::make($request->all(),
+            [
+                'name' => 'required',
+                'date' => 'required|date',
+                'amount' => 'required|between:0,99.99'
+            ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors(), 400);
         }
 
@@ -167,7 +168,7 @@ class BudgetsController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

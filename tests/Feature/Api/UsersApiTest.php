@@ -18,7 +18,8 @@ class UsersApiTest extends PassportTestCase
     public function testIndex()
     {
         $response = $this->get('/api/users');
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 '*' => [
                     'id',
                     'name',
@@ -40,7 +41,8 @@ class UsersApiTest extends PassportTestCase
     public function testMe()
     {
         $response = $this->get('/api/me');
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 'id',
                 'name',
                 'email',
@@ -53,7 +55,6 @@ class UsersApiTest extends PassportTestCase
     }
 
 
-
     /**
      * Test REST API users show
      *
@@ -64,7 +65,8 @@ class UsersApiTest extends PassportTestCase
         $user = factory(User::class)->create();
 
         $response = $this->get('/api/users/' . $user->id);
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 'id',
                 'name',
                 'email',

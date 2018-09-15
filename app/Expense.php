@@ -12,7 +12,11 @@ class Expense extends Model
      * @var array
      */
     protected $fillable = [
-        'budget_id', 'place', 'date', 'price', 'reason'
+        'budget_id',
+        'place',
+        'date',
+        'price',
+        'reason'
     ];
 
     public function budget()

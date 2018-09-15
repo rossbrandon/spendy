@@ -32,11 +32,12 @@ class UsersController extends Controller
      */
     public function update(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $this->validate($request,
+            [
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
 
         $user = Auth::user();
 

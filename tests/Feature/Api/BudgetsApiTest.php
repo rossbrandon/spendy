@@ -34,7 +34,8 @@ class BudgetsApiTest extends PassportTestCase
             'reason' => 'Testing 1'
         ]);
         $response = $this->get('/api/budgets');
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 '*' => [
                     'id',
                     'user_id',
@@ -59,7 +60,8 @@ class BudgetsApiTest extends PassportTestCase
     {
         $budget = factory(Budget::class)->create();
         $response = $this->get('/api/budgets/' . $budget->id);
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 'id',
                 'user_id',
                 'name',
@@ -94,7 +96,8 @@ class BudgetsApiTest extends PassportTestCase
             'reason' => 'Testing 2'
         ]);
         $response = $this->get('/api/budgets/' . $budget->date);
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 '*' => [
                     'id',
                     'user_id',
@@ -131,7 +134,8 @@ class BudgetsApiTest extends PassportTestCase
             'reason' => 'Testing 3'
         ]);
         $response = $this->get('/api/budgets/' . $budget->id . '/expenses');
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 '*' => [
                     'id',
                     'budget_id',
@@ -169,7 +173,8 @@ class BudgetsApiTest extends PassportTestCase
             'reason' => 'Testing 4'
         ]);
         $response = $this->get('/api/budgets/' . $budget->id . '/expenses/' . $budget->date);
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 '*' => [
                     'id',
                     'budget_id',
@@ -207,7 +212,8 @@ class BudgetsApiTest extends PassportTestCase
             'reason' => 'Testing 5'
         ]);
         $response = $this->get('/api/budgets/' . $budget->id . '/aggregate');
-        $response->assertStatus(200)->assertJsonStructure(['data' => [
+        $response->assertStatus(200)->assertJsonStructure([
+            'data' => [
                 'total-budget',
                 'total-spent',
                 'total-remaining'

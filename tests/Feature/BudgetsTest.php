@@ -55,7 +55,9 @@ class BudgetsTest extends TestCase
     {
         $budget = factory(Budget::class)->create();
 
-        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('budget.create'));
+        $response = $this->actingAs($budget->user)
+            ->withSession(['date' => strtotime(now())])
+            ->get(route('budget.create'));
         $this->assertAuthenticated();
         $response->assertStatus(200);
         $response->assertViewHas('navBudgets');
@@ -94,7 +96,8 @@ class BudgetsTest extends TestCase
     {
         $budget = factory(Budget::class)->create();
 
-        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('budget.edit', ['id' => $budget->id]));
+        $response = $this->actingAs($budget->user)->withSession(['date' => strtotime(now())])->get(route('budget.edit',
+            ['id' => $budget->id]));
         $this->assertAuthenticated();
         $response->assertStatus(200);
         $response->assertViewHas('navBudgets');

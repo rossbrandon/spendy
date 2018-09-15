@@ -20,7 +20,8 @@ class ExpensesController extends Controller
     {
         $date = $request->session()->get('date');
         $budgets = Budget::where('user_id', Auth::id())->get();
-        return view('expenses.create')->with('budgets', $budgets)
+        return view('expenses.create')
+            ->with('budgets', $budgets)
             ->with('navBudgets', $budgets->take(5))
             ->with('date', $date);
     }
@@ -28,18 +29,19 @@ class ExpensesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'budget_id' => 'required',
-            'place' => 'required',
-            'date' => 'required|date',
-            'price' => 'required|between:0,99.99',
-            'reason' => 'max:255'
-        ]);
+        $this->validate($request,
+            [
+                'budget_id' => 'required',
+                'place' => 'required',
+                'date' => 'required|date',
+                'price' => 'required|between:0,99.99',
+                'reason' => 'max:255'
+            ]);
 
         $expense = Expense::create([
             'budget_id' => $request->budget_id,
@@ -56,7 +58,7 @@ class ExpensesController extends Controller
      * Display the specified resource.
      *
      * @param \Illuminate\Http\Request
-     * @param  string  $name
+     * @param  string $name
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, string $name)
@@ -64,9 +66,7 @@ class ExpensesController extends Controller
         $date = $request->session()->get('date');
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
-        $budget = Budget::where('user_id', Auth::id())
-            ->where('name', $name)
-            ->first();
+        $budget = Budget::where('user_id', Auth::id())->where('name', $name)->first();
         $userBudgets = Budget::where('user_id', Auth::id())->get();
 
         if ($budget) {
@@ -83,7 +83,8 @@ class ExpensesController extends Controller
             $remaining = 0;
         }
 
-        return view('expenses.index')->with('expenses', $expenses)
+        return view('expenses.index')
+            ->with('expenses', $expenses)
             ->with('navBudgets', $userBudgets->take(5))
             ->with('date', $date)
             ->with('budget', $budget)
@@ -95,7 +96,7 @@ class ExpensesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \Illuminate\Http\Request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id)
@@ -104,7 +105,8 @@ class ExpensesController extends Controller
         $expense = Expense::find($id);
         $budgets = Budget::where('user_id', Auth::id())->get();
 
-        return view('expenses.edit')->with('expense', $expense)
+        return view('expenses.edit')
+            ->with('expense', $expense)
             ->with('budgets', $budgets)
             ->with('navBudgets', $budgets->take(5))
             ->with('budget', Budget::find($id))
@@ -114,19 +116,20 @@ class ExpensesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'budget_id' => 'required',
-            'place' => 'required',
-            'date' => 'required|date',
-            'price' => 'required|between:0,99.99',
-            'reason' => 'max:255'
-        ]);
+        $this->validate($request,
+            [
+                'budget_id' => 'required',
+                'place' => 'required',
+                'date' => 'required|date',
+                'price' => 'required|between:0,99.99',
+                'reason' => 'max:255'
+            ]);
 
         $expense = Expense::find($id);
         $expense->budget_id = $request->budget_id;
@@ -142,7 +145,7 @@ class ExpensesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -156,7 +159,7 @@ class ExpensesController extends Controller
     /**
      * Go to previous month
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @param string $name
      * @return \Illuminate\Http\Response
      */
@@ -172,7 +175,7 @@ class ExpensesController extends Controller
     /**
      * Go to next month
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @param string $name
      * @return \Illuminate\Http\Response
      */

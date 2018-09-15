@@ -17,7 +17,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return response()->json(['data' => User::all(), 'status' => Response::HTTP_OK]);
+        return response()->json([
+            'data' => User::all(),
+            'status' => Response::HTTP_OK
+        ]);
     }
 
     /**
@@ -27,17 +30,23 @@ class UsersController extends Controller
      */
     public function me()
     {
-        return response()->json(['data' => User::find(Auth::id()), 'status' => Response::HTTP_OK]);
+        return response()->json([
+            'data' => User::find(Auth::id()),
+            'status' => Response::HTTP_OK
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return response()->json(['data' => User::find($id), 'status' => Response::HTTP_OK]);
+        return response()->json([
+            'data' => User::find($id),
+            'status' => Response::HTTP_OK
+        ]);
     }
 }

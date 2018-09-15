@@ -23,7 +23,8 @@ class BudgetsController extends Controller
         $date = $request->session()->get('date');
         $budgets = Budget::where('user_id', Auth::id())->get();
 
-        return view('budgets.index')->with('navBudgets', $budgets->take(5))
+        return view('budgets.index')
+            ->with('navBudgets', $budgets->take(5))
             ->with('budgets', $budgets)
             ->with('date', $date);
     }
@@ -37,23 +38,23 @@ class BudgetsController extends Controller
     {
         $date = $request->session()->get('date');
         $budgets = Budget::where('user_id', Auth::id())->get();
-        return view('budgets.create')->with('navBudgets', $budgets->take(5))
-            ->with('date', $date);
+        return view('budgets.create')->with('navBudgets', $budgets->take(5))->with('date', $date);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'date' => 'required|date',
-            'amount' => 'required|between:0,99.99'
-        ]);
+        $this->validate($request,
+            [
+                'name' => 'required',
+                'date' => 'required|date',
+                'amount' => 'required|between:0,99.99'
+            ]);
 
         $date = date('Y-m-01', strtotime($request->date));
 
@@ -71,7 +72,7 @@ class BudgetsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \Illuminate\Http\Request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id)
@@ -80,7 +81,8 @@ class BudgetsController extends Controller
         $budget = Budget::find($id);
         $budgets = Budget::where('user_id', Auth::id())->get();
 
-        return view('budgets.edit')->with('budget', $budget)
+        return view('budgets.edit')
+            ->with('budget', $budget)
             ->with('navBudgets', $budgets->take(5))
             ->with('date', $date);
     }
@@ -88,17 +90,18 @@ class BudgetsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'date' => 'required|date',
-            'amount' => 'required|between:0,99.99'
-        ]);
+        $this->validate($request,
+            [
+                'name' => 'required',
+                'date' => 'required|date',
+                'amount' => 'required|between:0,99.99'
+            ]);
 
         $budget = Budget::find($id);
         $budget->name = $request->name;
@@ -112,7 +115,7 @@ class BudgetsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

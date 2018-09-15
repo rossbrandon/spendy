@@ -26,20 +26,21 @@ class ExpensesController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'budget_id' => 'required',
-            'place' => 'required',
-            'date' => 'required|date',
-            'price' => 'required|between:0,99.99',
-            'reason' => 'max:255'
-        ]);
+        $validator = Validator::make($request->all(),
+            [
+                'budget_id' => 'required',
+                'place' => 'required',
+                'date' => 'required|date',
+                'price' => 'required|between:0,99.99',
+                'reason' => 'max:255'
+            ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Validation Failed', $validator->errors(), 400);
         }
 
@@ -57,7 +58,7 @@ class ExpensesController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -68,21 +69,22 @@ class ExpensesController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'budget_id' => 'required',
-            'place' => 'required',
-            'date' => 'required|date',
-            'price' => 'required|between:0,99.99',
-            'reason' => 'max:255'
-        ]);
+        $validator = Validator::make($request->all(),
+            [
+                'budget_id' => 'required',
+                'place' => 'required',
+                'date' => 'required|date',
+                'price' => 'required|between:0,99.99',
+                'reason' => 'max:255'
+            ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors(), 400);
         }
 
@@ -104,7 +106,7 @@ class ExpensesController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
