@@ -3,6 +3,7 @@ language: php
 php:
   - 7.1
   - 7.2
+  - 7.3
 
 before_script:
   - cp .env.travis .env
@@ -10,7 +11,8 @@ before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source --dev
   - php artisan key:generate
-  - php artisan migrate
+  - php artisan migrate:fresh
+  - php artisan voyager:install
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
