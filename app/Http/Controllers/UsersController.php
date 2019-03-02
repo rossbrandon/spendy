@@ -29,6 +29,7 @@ class UsersController extends Controller
      *
      * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function update(Request $request)
     {

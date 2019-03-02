@@ -18,28 +18,28 @@ class BudgetsTableSeeder extends Seeder
             'user_id' => $user->id,
             'name' => 'Dining',
             'amount' => 100.00,
-            'date' => '2018-05-01',
+            'date' => '2019-03-01',
         ]);
 
         App\Budget::create([
             'user_id' => $user->id,
             'name' => 'Groceries',
             'amount' => 300.00,
-            'date' => '2018-05-01'
+            'date' => '2019-03-01'
         ]);
 
         App\Budget::create([
             'user_id' => $user->id,
             'name' => 'Bills',
             'amount' => 3000.00,
-            'date' => '2018-05-01'
+            'date' => '2019-03-01'
         ]);
 
         App\Budget::create([
             'user_id' => $user->id,
             'name' => 'Gas',
             'amount' => 60.00,
-            'date' => '2018-05-01'
+            'date' => '2019-03-01'
         ]);
     }
 }

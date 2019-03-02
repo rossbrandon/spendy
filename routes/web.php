@@ -135,4 +135,9 @@ Route::group(['middleware' => 'auth'],
                 'uses' => 'BudgetsController@destroy',
                 'as' => 'budget.delete'
             ]);
-    });
+    }
+);
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
