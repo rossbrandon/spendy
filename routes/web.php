@@ -11,6 +11,10 @@
 |
 */
 
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+
 Route::get('/',
     [
         'uses' => 'HomeController@index',
@@ -137,7 +141,3 @@ Route::group(['middleware' => 'auth'],
             ]);
     }
 );
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
