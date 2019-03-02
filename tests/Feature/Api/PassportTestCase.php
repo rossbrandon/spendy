@@ -14,7 +14,7 @@ class PassportTestCase extends TestCase
     protected $user;
     protected $baseUrl = '/';
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $clientRepository = new ClientRepository();
