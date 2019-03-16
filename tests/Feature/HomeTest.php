@@ -71,6 +71,29 @@ class HomeTest extends TestCase
      *
      * @return void
      */
+    public function testDashboardSwitchNoDate()
+    {
+        $budget = factory(Budget::class)->create();
+        $user = User::find($budget->user_id);
+
+        $response = $this->actingAs($user)->withSession(['switch' => true])->get('/dashboard');
+        $this->assertAuthenticated();
+        $response->assertStatus(200);
+        $response->assertViewHas('budgets');
+        $response->assertViewHas('navBudgets');
+        $response->assertViewHas('date');
+        $response->assertViewHas('budgetSpent');
+        $response->assertViewHas('totalBudget');;
+        $response->assertViewHas('totalSpent');
+        $response->assertViewHas('totalRemaining');
+    }
+
+
+    /**
+     * Test home controller dashboard route
+     *
+     * @return void
+     */
     public function testDashboardResetDate()
     {
         $budget = factory(Budget::class)->create();
