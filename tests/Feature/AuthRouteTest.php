@@ -47,7 +47,7 @@ class AuthRouteTest extends TestCase
         $response = $this->get('/expense/next/dining');
         $response->assertRedirect('/login');
 
-        $response = $this->get('/expense/create');
+        $response = $this->get('/expense/create/1');
         $response->assertRedirect('/login');
 
         $response = $this->post('/expense/store');
