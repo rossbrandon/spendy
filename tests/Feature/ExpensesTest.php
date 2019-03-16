@@ -65,7 +65,7 @@ class ExpensesTest extends TestCase
 
         $response = $this->actingAs($budget->user)
             ->withSession(['date' => strtotime(now())])
-            ->get(route('expense.create'));
+            ->get(route('expense.create', ['name' => $budget->name]));
         $this->assertAuthenticated();
         $response->assertStatus(200);
         $response->assertViewHas('budgets');
