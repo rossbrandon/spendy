@@ -53,7 +53,8 @@ class HomeTest extends TestCase
         $budget = factory(Budget::class)->create();
         $user = User::find($budget->user_id);
 
-        $response = $this->actingAs($user)->get('/dashboard');
+        $response = $this->actingAs($user)
+            ->withSession(['switch' => true, 'date' => strtotime(now())])->get('/dashboard');
         $this->assertAuthenticated();
         $response->assertStatus(200);
         $response->assertViewHas('budgets');
