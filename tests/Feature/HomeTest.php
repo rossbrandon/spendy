@@ -67,6 +67,50 @@ class HomeTest extends TestCase
     }
 
     /**
+     * Test home controller dashboard route
+     *
+     * @return void
+     */
+    public function testDashboardResetDate()
+    {
+        $budget = factory(Budget::class)->create();
+        $user = User::find($budget->user_id);
+
+        $response = $this->actingAs($user)->withSession(['date' => strtotime(now())])->get('/dashboard');
+        $this->assertAuthenticated();
+        $response->assertStatus(200);
+        $response->assertViewHas('budgets');
+        $response->assertViewHas('navBudgets');
+        $response->assertViewHas('date');
+        $response->assertViewHas('budgetSpent');
+        $response->assertViewHas('totalBudget');;
+        $response->assertViewHas('totalSpent');
+        $response->assertViewHas('totalRemaining');
+    }
+
+    /**
+     * Test home controller dashboard route
+     *
+     * @return void
+     */
+    public function testDashboardNoDate()
+    {
+        $budget = factory(Budget::class)->create();
+        $user = User::find($budget->user_id);
+
+        $response = $this->actingAs($user)->get('/dashboard');
+        $this->assertAuthenticated();
+        $response->assertStatus(200);
+        $response->assertViewHas('budgets');
+        $response->assertViewHas('navBudgets');
+        $response->assertViewHas('date');
+        $response->assertViewHas('budgetSpent');
+        $response->assertViewHas('totalBudget');;
+        $response->assertViewHas('totalSpent');
+        $response->assertViewHas('totalRemaining');
+    }
+
+    /**
      * Test home controller prev route
      *
      * @return void
