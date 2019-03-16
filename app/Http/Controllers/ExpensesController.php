@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\Budget;
@@ -9,21 +10,25 @@ use Auth;
 
 class ExpensesController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
      *
      * @param \Illuminate\Http\Request
+     * @param string $name
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, string $name)
     {
         $date = $request->session()->get('date');
         $budgets = Budget::where('user_id', Auth::id())->get();
+        $selectedBudget = Budget::where('user_id', Auth::id())->where('name', $name)->first();
+        $dateTime = Carbon::createFromTimestamp($date)->toDateTimeString();
         return view('expenses.create')
             ->with('budgets', $budgets)
+            ->with('selectedBudget', $selectedBudget)
             ->with('navBudgets', $budgets->take(5))
-            ->with('date', $date);
+            ->with('date', $date)
+            ->with('dateTime', $dateTime);
     }
 
     /**
@@ -68,6 +73,7 @@ class ExpensesController extends Controller
         $firstDayOfMonth = date('Y-m-01', $date);
         $lastDayOfMonth = date('Y-m-t', $date);
         $budget = Budget::where('user_id', Auth::id())->where('name', $name)->first();
+        $selectedBudget = Budget::where('user_id', Auth::id())->where('name', $name)->first();
         $userBudgets = Budget::where('user_id', Auth::id())->get();
 
         if ($budget) {
@@ -89,6 +95,7 @@ class ExpensesController extends Controller
             ->with('navBudgets', $userBudgets->take(5))
             ->with('date', $date)
             ->with('budget', $budget)
+            ->with('selectedBudget', $selectedBudget)
             ->with('spent', $spent)
             ->with('remaining', $remaining);
     }

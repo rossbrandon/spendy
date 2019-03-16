@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-laravel">
     @if (Auth::check())
         <a class="navbar-brand" href="{{ url('/dashboard') }}">
-            {{ config('app.name', 'Laravel') }}
+            {{ config('app.name', 'Spendy') }}
         </a>
     @else
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+            {{ config('app.name', 'Spendy') }}
         </a>
     @endif
 

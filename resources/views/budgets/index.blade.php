@@ -33,7 +33,7 @@
                     </div>
                 </div>
             @else
-                <h2 class="text-center">No budgets found... <a href="{{ route('budget.create') }}">Create One!</a></h2>
+                <h2 class="text-center">No budgets found... <a href="{{ route('expense.create', ['name' => $selectedBudget->name]) }}">Create One!</a></h2>
             @endif
         </div>
     </div>

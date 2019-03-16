@@ -100,11 +100,11 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('expense.create') }}" class="btn btn-success float-right">Add Entry</a>
+                        <a href="{{ route('expense.create', ['name' => $selectedBudget->name]) }}" class="btn btn-success float-right">Add Entry</a>
                     </div>
                 </div>
             @else
-                <h2 class="text-center">No transactions found for this budget category... <a href="{{ route('expense.create') }}">Create One!</a></h2>
+                <h2 class="text-center">No transactions found for this budget category... <a href="{{ route('expense.create', ['name' => $selectedBudget->name]) }}">Create One!</a></h2>
             @endif
         </div>
     </div>

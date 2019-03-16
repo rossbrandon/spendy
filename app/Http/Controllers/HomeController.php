@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Budget;
 use App\Expense;
@@ -34,13 +35,22 @@ class HomeController extends Controller
      */
     public function dashboard(Request $request)
     {
-        if (!$request->session()->get('date')) {
-            $request->session()->put('date', strtotime(now()));
+        $date = Carbon::now()->timestamp;
+        if ($request->session()->get('switch')) {
+            $request->session()->forget('switch');
+            if (!$request->session()->get('date')) {
+                $request->session()->put('date', $date);
+            }
+            $date = $request->session()->get('date');
+            $firstDayOfMonth = date('Y-m-01', $date);
+            $lastDayOfMonth = date('Y-m-t', $date);
+        } else {
+            $request->session()->forget('date');
+            $firstDayOfMonth = Carbon::now()->startOfMonth();
+            $lastDayOfMonth = Carbon::now()->endOfMonth();
+            $request->session()->put('date', $date);
         }
 
-        $date = $request->session()->get('date');
-        $firstDayOfMonth = date('Y-m-01', $date);
-        $lastDayOfMonth = date('Y-m-t', $date);
         $budgets = Budget::where('user_id', Auth::id())->get();
         $userBudgets = Budget::where('user_id', Auth::id())->get();
 
@@ -77,6 +87,7 @@ class HomeController extends Controller
      */
     public function prev(Request $request)
     {
+        $request->session()->put('switch', true);
         $date = $request->session()->pull('date');
         $prevMonth = date('Y-m-01', strtotime('-1 month', $date));
         $request->session()->put('date', strtotime($prevMonth));
@@ -92,6 +103,7 @@ class HomeController extends Controller
      */
     public function next(Request $request)
     {
+        $request->session()->put('switch', true);
         $date = $request->session()->pull('date');
         $prevMonth = date('Y-m-01', strtotime('+1 month', $date));
         $request->session()->put('date', strtotime($prevMonth));

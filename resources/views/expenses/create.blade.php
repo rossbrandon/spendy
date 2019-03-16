@@ -26,7 +26,11 @@
                             <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Date') }}</label>
 
                             <div class="col-md-6">
-                                <input id="date" type="date" class="form-control" name="date" value="{{ date('Y-m-d') }}" required>
+                                @if(date('m') == date('m', strtotime($dateTime)))
+                                    <input id="date" type="date" class="form-control" name="date" value="{{ date('Y-m-d') }}" required>
+                                @else
+                                    <input id="date" type="date" class="form-control" name="date" value="{{ date('Y-m-01', strtotime($dateTime)) }}" required>
+                                @endif
                             </div>
                         </div>
 
@@ -44,7 +48,11 @@
                             <div class="col-md-6">
                                 <select name="budget_id" id="budget_id" class="form-control">
                                     @foreach($budgets as $budget)
-                                        <option value="{{ $budget->id }}">{{ $budget->name }}</option>
+                                        <option value="{{ $budget->id }}"
+                                                @if($selectedBudget->id == $budget->id)
+                                                selected
+                                            @endif
+                                        >{{ $budget->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -69,7 +77,7 @@
                             </div>
                         </div>
                     </form>
-                </form>
+                </div>
             </div>
         </div>
     </div>

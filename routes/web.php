@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth'],
                 'as' => 'expense.next'
             ]);
 
-        Route::get('/expense/create',
+        Route::get('/expense/create/{budgetId}',
             [
                 'uses' => 'ExpensesController@create',
                 'as' => 'expense.create'
